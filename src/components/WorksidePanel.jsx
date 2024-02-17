@@ -13,8 +13,12 @@ const WorksidePanel = () => {
           <h1 className="font-bold text-5xl">Workside Software</h1>
           <h2 className="text-3xl italic">Your Efficiency Partner</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Workside Statement of Purpose: Workside Software is committed to
+            providing the highest quality software solutions to help businesses
+            achieve their goals. We are dedicated to providing the best customer
+            service and support to our clients. Our team is committed to
+            delivering the best software solutions to help businesses streamline
+            their operations and achieve their goals.
           </p>
         </div>
       </div>
