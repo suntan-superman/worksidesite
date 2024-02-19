@@ -9,7 +9,7 @@ const Policies = () => {
         className="w-full h-full object-cover"
       />
       <div className="max-w-[1140px] m-auto">
-        <div className="absolute top-[10%] w-full md:-[50%] max-w-[600px] h-full flex flex-col text-white p-4">
+        <div className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
           <h1 className="font-bold text-5xl">Workside Software Policies</h1>
           <h2 className="text-3xl italic">Your Efficiency Partner</h2>
           <br />
