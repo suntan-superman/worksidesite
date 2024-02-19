@@ -24,6 +24,11 @@ const NavBar = () => {
           </Link>
         </li>
         <li>
+          <Link className="text-2xl py-8" to="/products">
+            Products
+          </Link>
+        </li>
+        <li>
           <Link className="text-2xl py-8" to="/services">
             Services
           </Link>
@@ -67,6 +72,11 @@ const NavBar = () => {
           <li>
             <Link className="text-2xl py-8" to="/">
               Home
+            </Link>
+          </li>
+          <li>
+            <Link className="text-2xl py-8" to="/products">
+              Products
             </Link>
           </li>
           <li>
