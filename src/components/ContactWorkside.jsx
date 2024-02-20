@@ -29,12 +29,12 @@ const ContactWorkside = () => {
           <p>
             For Sales and Product Inquiries: Discover how our software solutions
             can transform your operations. Contact our sales team at
-            sales@worksidesoftware.com or call us at 888-555-7777.
+            contact@worksidesoftware.com or call us at 888-555-7777.
           </p>
           <br />
           <p>
             Customer Support: Existing clients needing assistance can reach our
-            support team at support@worksidesoftware.com or through our customer
+            support team at contact@worksidesoftware.com or through our customer
             support hotline at 888-555-6666. Our dedicated professionals are
             available to ensure your continued success with our solutions.
           </p>
@@ -42,7 +42,7 @@ const ContactWorkside = () => {
           <p>
             Careers: Join our team and help shape the future of the oil and gas
             industry. For career opportunities, please visit our careers page or
-            email us at careers@worksidesoftware.com.
+            email us at contact@worksidesoftware.com.
           </p>
           <br />
           <p>

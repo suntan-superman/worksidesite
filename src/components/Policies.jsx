@@ -59,7 +59,7 @@ const Policies = () => {
           <p className="text-xl font-bold">Contact Us</p>
           <p>
             For any questions or concerns regarding this policy or our SMS text
-            messages, please contact us at: support@worksidesoftware.com.
+            messages, please contact us at: contact@worksidesoftware.com.
           </p>
         </div>
       </div>
