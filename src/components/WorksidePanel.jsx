@@ -10,8 +10,13 @@ const WorksidePanel = () => {
       />
       <div className="max-w-[1140px] m-auto">
         <div className="absolute top-[40%] w-full md:-[50%] max-w-[600px] h-full flex flex-col text-white p-4">
-          <h1 className="font-bold text-5xl">Workside Software</h1>
-          <h2 className="text-3xl italic">Your Efficiency Partner</h2>
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
+            Workside Software
+          </h1>
+          {/* <h2 className="text-3xl sm:text-xl md:text-2xl italic"> */}
+          <h2 className="text-xl md:text-2xl lg:text-3xl italic">
+            Your Efficiency Partner
+          </h2>
           <p>
             Workside Statement of Purpose: Workside Software is committed to
             providing the highest quality software solutions to help businesses

@@ -10,8 +10,12 @@ const Policies = () => {
       />
       <div className="max-w-[1140px] m-auto">
         <div className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
-          <h1 className="font-bold text-5xl">Workside Software Policies</h1>
-          <h2 className="text-3xl italic">Your Efficiency Partner</h2>
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
+            Workside Software Policies
+          </h1>
+          <h2 className="text-xl md:text-2xl lg:text-3xl italic">
+            Your Efficiency Partner
+          </h2>
           <br />
           <p className="text-xl font-bold">
             Workside Software is committed to protecting your privacy and

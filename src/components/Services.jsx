@@ -13,8 +13,12 @@ const Services = () => {
           //   className="absolute top-[15%] w-full md:-[50%] max-w-[1000px] h-full flex flex-col text-white p-4"
           className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll"
         >
-          <h1 className="font-bold text-5xl">Workside Software Services</h1>
-          <h2 className="text-3xl italic">Your Efficiency Partner</h2>
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
+            Workside Software Services
+          </h1>
+          <h2 className="text-xl md:text-2xl lg:text-3xl italic">
+            Your Efficiency Partner
+          </h2>
           <p>
             At Workside Software, we are dedicated to powering the future of the
             oil and gas industry through innovative software solutions. Our

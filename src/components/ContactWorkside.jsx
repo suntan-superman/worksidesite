@@ -14,8 +14,12 @@ const ContactWorkside = () => {
           overflow-auto
           hover:overflow-scroll"
         >
-          <h1 className="font-bold text-5xl">Contact Workside Software</h1>
-          <h2 className="text-3xl italic">Your Efficiency Partner</h2>
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
+            Contact Workside Software
+          </h1>
+          <h2 className="text-xl md:text-2xl lg:text-3xl italic">
+            Your Efficiency Partner
+          </h2>
           <p>
             At Workside Software, we are always eager to connect with our
             clients, potential partners, and members of the oil and gas
