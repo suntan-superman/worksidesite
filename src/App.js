@@ -8,6 +8,10 @@ import Services from "./components/Services";
 import ContactWorkside from "./components/ContactWorkside";
 import Policies from "./components/Policies";
 import { Route, Routes } from "react-router-dom";
+import SMSTextOptInForm from "./components/SMSTextOptInForm";
+import SMSTermsAndConditions from "./components/SMSTermsAndConditions";
+import Privacy from "./components/Privacy";
+
 // import { registerLicense } from "@syncfusion/ej2-base";
 
 // import { pdfjs } from "react-pdf";
@@ -35,11 +39,9 @@ function App() {
         <Route path="/contact" element={<ContactWorkside />} />
         <Route path="/about" element={<About />} />
         <Route path="/policies" element={<Policies />} />
-        {/* </Route> */}
-        {/* <Route path="/about">
-          <Route index element={<About />} />
-          <Route path="Policies" element={<Policies />} />
-        </Route> */}
+        <Route path="/smstextoptinform" element={<SMSTextOptInForm />} />
+        <Route path="/smsterms" element={<SMSTermsAndConditions />} />
+        <Route path="/privacy" element={<Privacy />} />
       </Routes>
     </>
   );

@@ -107,6 +107,14 @@ const NavBar = () => {
                 Policies
               </Link>
             </li>
+            <li>
+              <Link
+                className="text-lg md:text-xl lg:text-2xl py-8"
+                to="/smstextoptinform"
+              >
+                SMS Text Opt-In
+              </Link>
+            </li>
           </li>
         </ul>
       </div>

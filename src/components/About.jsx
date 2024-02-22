@@ -32,7 +32,7 @@ const About = () => {
             technology. With a deep understanding of the industry's intricacies,
             we set out to create software solutions that not only solve
             immediate problems but also pave the way for a more efficient,
-            sustainable, and profitable future.{" "}
+            sustainable, and profitable future.
           </p>
           <br />
           <p>
@@ -43,7 +43,7 @@ const About = () => {
             critical insights, automate workflows, and enhance decision-making.
             Our portfolio includes data analytics, asset management, regulatory
             compliance, supply chain optimization, and digital transformation
-            services.{" "}
+            services.
           </p>
           <br />
           <p>

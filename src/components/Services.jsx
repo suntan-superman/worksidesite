@@ -9,10 +9,7 @@ const Services = () => {
         className="w-full h-full object-cover"
       />
       <div className="max-w-[1140px] m-auto">
-        <div
-          //   className="absolute top-[15%] w-full md:-[50%] max-w-[1000px] h-full flex flex-col text-white p-4"
-          className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll"
-        >
+        <div className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
           <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
             Workside Software Services
           </h1>
@@ -67,24 +64,21 @@ const Services = () => {
           <br />
           <p className="text-xl font-bold">Custom Software Development:</p>
           <p>
-            {" "}
             Tailored solutions to meet your unique needs. Our experienced
             developers can create custom software that integrates seamlessly
             with your existing systems, enhancing functionality and improving
-            user experience.{" "}
+            user experience.
           </p>
           <br />
           <p className="text-xl font-bold">Training and Support:</p>
           <p>
-            {" "}
             Empower your team with knowledge. We offer comprehensive training
             programs and ongoing support to ensure your staff is proficient with
-            our software, maximizing the value of your investment.{" "}
+            our software, maximizing the value of your investment.
           </p>
           <br />
           <p className="text-xl font-bold">Why Choose Workside Software?</p>
           <p>
-            {" "}
             Industry Expertise: With years of experience in the oil and gas
             sector, we understand your challenges and how to solve them.
             Innovation-Driven: We are constantly evolving our technology to meet
