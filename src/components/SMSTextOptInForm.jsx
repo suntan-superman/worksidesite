@@ -21,7 +21,8 @@ const SMSTextOptInForm = () => {
           <p>
             Users who wish to receive SMS text messages from Workside Software
             can fill out this form in order to provide their mobile phone number
-            and opt in, giving their permission to receive messages.
+            and opt in, giving their permission to receive messages. Consent is
+            not a condition of purchase. Msg & Data rates apply.
           </p>
           <br />
           <p className="text-xl font-bold">Mobile Phone Number: *</p>
