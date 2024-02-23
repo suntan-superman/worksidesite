@@ -13,8 +13,14 @@ const TopBar = () => {
         <h1 className="text-green-500 text-lg md:text-2xl lg:text-3xl font-bold">
           WORK
         </h1>
-        <h1 className="text-black text-lg md:text-2xl lg:text-3xl font-bold">
+        {/* <h1 className="text-black text-lg md:text-2xl lg:text-3xl font-bold">
           SIDE Software
+        </h1> */}
+        <h1 className="text-black text-lg md:text-2xl lg:text-3xl font-bold">
+          {"SIDE "}
+        </h1>
+        <h1 className="hidden md:flex text-black text-lg md:text-2xl lg:text-3xl font-bold ml-2">
+          {"Software"}
         </h1>
       </div>
       <div className="flex space-x-16">
