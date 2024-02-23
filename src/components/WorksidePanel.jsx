@@ -13,7 +13,6 @@ const WorksidePanel = () => {
           <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
             Workside Software
           </h1>
-          {/* <h2 className="text-3xl sm:text-xl md:text-2xl italic"> */}
           <h2 className="text-xl md:text-2xl lg:text-3xl italic">
             Your Efficiency Partner
           </h2>

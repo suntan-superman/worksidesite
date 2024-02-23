@@ -9,7 +9,7 @@ const Services = () => {
         className="w-full h-full object-cover"
       />
       <div className="max-w-[1140px] m-auto">
-        <div className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
+        <div className="absolute top-[20%] md:top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
           <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
             Workside Software Services
           </h1>

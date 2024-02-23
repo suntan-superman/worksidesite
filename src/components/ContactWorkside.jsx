@@ -10,7 +10,7 @@ const ContactWorkside = () => {
       />
       <div className="max-w-[1140px] m-auto">
         <div
-          className="absolute top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4
+          className="absolute top-[20%] md:top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4
           overflow-auto
           hover:overflow-scroll"
         >

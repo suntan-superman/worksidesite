@@ -94,27 +94,27 @@ const NavBar = () => {
             <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/contact">
               Contact
             </Link>
-            <li>
-              <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/about">
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-lg md:text-xl lg:text-2xl py-8"
-                to="/policies"
-              >
-                Policies
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="text-lg md:text-xl lg:text-2xl py-8"
-                to="/smstextoptinform"
-              >
-                SMS Text Opt-In
-              </Link>
-            </li>
+          </li>
+          <li>
+            <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/about">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-lg md:text-xl lg:text-2xl py-8"
+              to="/policies"
+            >
+              Policies
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-lg md:text-xl lg:text-2xl py-8"
+              to="/smstextoptinform"
+            >
+              SMS Text Opt-In
+            </Link>
           </li>
         </ul>
       </div>
