@@ -44,7 +44,7 @@ const NavBar = () => {
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/policies">
+          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="c">
             Policies
           </Link>
         </li>
