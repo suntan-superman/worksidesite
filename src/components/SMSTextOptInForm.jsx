@@ -43,11 +43,19 @@ const SMSTextOptInForm = () => {
           {/* <br /> */}
           <p>
             <label class="block text-white">
-              <input class="mr-2 leading-tight" type="checkbox" />
+              <input class="mr-2 leading-tight align-middle" type="checkbox" />
               {/* <span class="text-xl"> */}
               <span>
-                Check this box to give Workside Software permission to send SMS
-                text messages according to{" "}
+                I agree to receive SMS text messages from Workside Software at
+                the mobile phone number provided above. I understand that I can
+                opt out at any time by texting STOP to cancel. Msg frequency may
+                vary. Msg&Data rates may apply.
+              </span>
+              {/* Check this box to give Workside Software permission to send SMS
+                text messages according to{" "} */}
+              <br />
+              <br />
+              <span>
                 <Link className="py-8 font-bold text-green-300" to="/smsterms">
                   Terms and Conditions{" "}
                 </Link>
