@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import { Link } from "react-router-dom";
 
 const options = [
   { value: "SUPPLIER", label: "Supplier" },
