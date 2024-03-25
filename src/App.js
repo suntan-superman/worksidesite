@@ -11,6 +11,7 @@ import { Route, Routes } from "react-router-dom";
 import SMSTextOptInForm from "./components/SMSTextOptInForm";
 import SMSTermsAndConditions from "./components/SMSTermsAndConditions";
 import Privacy from "./components/Privacy";
+import RegistrationForm from "./components/RegistrationForm";
 
 // import { registerLicense } from "@syncfusion/ej2-base";
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/smstextoptinform" element={<SMSTextOptInForm />} />
         <Route path="/smsterms" element={<SMSTermsAndConditions />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/registration" element={<RegistrationForm />} />
       </Routes>
     </>
   );

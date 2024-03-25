@@ -39,6 +39,14 @@ const NavBar = () => {
           </Link>
         </li>
         <li>
+          <Link
+            className="text-lg md:text-xl lg:text-2xl py-8"
+            to="/registration"
+          >
+            Registration
+          </Link>
+        </li>
+        <li>
           <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/about">
             About
           </Link>
@@ -107,8 +115,11 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/about">
-              About
+            <Link
+              className="text-lg md:text-xl lg:text-2xl py-8"
+              to="/registration"
+            >
+              Registration
             </Link>
           </li>
           <li>
