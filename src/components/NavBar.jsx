@@ -59,14 +59,14 @@ const NavBar = () => {
         {/* ////////////////////////////////////////////////////////////////////// */}
         {/* Temporary Until I Can Get SMS Approval */}
         {/* ////////////////////////////////////////////////////////////////////// */}
-        <li>
+        {/* <li>
           <Link
             className="text-lg md:text-xl lg:text-2xl py-8"
             to="/smstextoptinform"
           >
             SMS Program
           </Link>
-        </li>
+        </li> */}
       </ul>
       <div className="flex justify-between">
         <FaFacebookF className="mx-4" />
@@ -130,25 +130,25 @@ const NavBar = () => {
               Policies
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               className="text-lg md:text-xl lg:text-2xl py-8"
               to="/smsterms"
             >
               SMS Program
             </Link>
-          </li>
+          </li> */}
           {/* ////////////////////////////////////////////////////////////////////// */}
           {/* Temporary Until I Can Get SMS Approval */}
           {/* ////////////////////////////////////////////////////////////////////// */}
-          <li>
+          {/* <li>
             <Link
               className="text-lg md:text-xl lg:text-2xl py-8"
               to="/smstextoptinform"
             >
               SMS Text Opt-In
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
