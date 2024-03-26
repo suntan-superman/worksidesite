@@ -1,9 +1,6 @@
 [[redirects]]
-from = "/home"
-to = "/"
-
-[[redirects]]
-from = "/register"
-to = "/registration"
+from = "/*"
+to = "/index.html"
+status = 200
 
 
