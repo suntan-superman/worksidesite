@@ -3,7 +3,7 @@ from = "/home"
 to = "/"
 
 [[redirects]]
-from = "/registration"
+from = "/register"
 to = "/registration"
 
 
