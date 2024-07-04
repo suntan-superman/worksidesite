@@ -8,6 +8,9 @@ const options = [
 ];
 
 const RegistrationForm = () => {
+  const queryString = window.location.search;
+  if (queryString !== "") console.log("QueryString: " + queryString);
+
   const [className, setClassName] = useState(null);
   function customTheme(theme) {
     return {
