@@ -38,14 +38,7 @@ const NavBar = () => {
             Contact
           </Link>
         </li>
-        <li>
-          <Link
-            className="text-sm md:text-base lg:text-lg py-8"
-            to="/registration"
-          >
-            Registration
-          </Link>
-        </li>
+
         <li>
           <Link className="text-sm md:text-base lg:text-lg py-8" to="/about">
             About
@@ -129,14 +122,7 @@ const NavBar = () => {
               Contact
             </Link>
           </li>
-          <li>
-            <Link
-              className="text-sm md:text-base lg:text-lg py-8"
-              to="/registration"
-            >
-              Registration
-            </Link>
-          </li>
+
           <li>
             <Link
               className="text-sm md:text-base lg:text-lg py-8"

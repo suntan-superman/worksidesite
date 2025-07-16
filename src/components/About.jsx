@@ -8,7 +8,7 @@ const About = () => {
         alt="Background"
         className="w-full h-full object-cover fixed top-0 left-0 -z-10"
       />
-      <div className="max-w-[1200px] m-auto pt-24 pb-8">
+      <div className="max-w-[1200px] m-auto pt-12 pb-8">
         <div className="w-full flex flex-col text-white p-4">
           <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
             About Workside Software

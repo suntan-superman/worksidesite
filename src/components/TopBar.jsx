@@ -1,6 +1,7 @@
 import React from "react";
 import { AiFillPhone, AiOutlineClockCircle } from "react-icons/ai";
 import { BsChatSquareDots } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const TopBar = () => {
   return (
@@ -35,7 +36,12 @@ const TopBar = () => {
           <AiFillPhone size={20} className="mr-2 text-[var(--primary-dark)]" />
           <p className="text-base text-gray-800">1-800-123-4567</p>
         </div>
-        <button>Sign Up Now</button>
+        <Link 
+          to="/registration" 
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold transition-colors"
+        >
+          Sign Up Now
+        </Link>
       </div>
     </div>
   );
