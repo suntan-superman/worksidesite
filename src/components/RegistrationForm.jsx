@@ -4,7 +4,7 @@ import Select from "react-select";
 const options = [
   { value: "SUPPLIER", label: "Supplier" },
   { value: "CUSTOMER", label: "Customer" },
-  { value: "DELIVERYASSOC", label: "Delivery Assoc" },
+  { value: "DELIVERYASSOC", label: "Delivery Associate" },
 ];
 
 const RegistrationForm = () => {
@@ -12,13 +12,14 @@ const RegistrationForm = () => {
   if (queryString !== "") console.log("QueryString: " + queryString);
 
   const [className, setClassName] = useState(null);
+  
   function customTheme(theme) {
     return {
       ...theme,
       colors: {
         ...theme.colors,
-        primary25: "green",
-        primary: "black",
+        primary25: "#16a34a",
+        primary: "#15803d",
       },
     };
   }
@@ -28,10 +29,15 @@ const RegistrationForm = () => {
     const lastName = document.getElementById("lastName").value;
     const nickName = document.getElementById("nickName").value;
     const company = document.getElementById("company").value;
-    // const userClass = document.getElementById("userClass").value;
-    const userClass = className.value;
+    const userClass = className?.value;
     const email = document.getElementById("email").value;
     const mobileNumber = document.getElementById("mobileNumber").value;
+    
+    if (!firstName || !lastName || !nickName || !company || !userClass || !email || !mobileNumber) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     const data = {
       firstName,
       lastName,
@@ -41,79 +47,182 @@ const RegistrationForm = () => {
       email,
       mobileNumber,
     };
-    console.log("Data:" + JSON.stringify(data));
+    console.log("Registration Data:", JSON.stringify(data));
+    alert("Registration submitted successfully! We will contact you soon.");
   };
 
   return (
-    <div className="w-full h-[90vh]">
+    <div className="w-full min-h-screen">
       <img
         src={process.env.PUBLIC_URL + "background.jpg"}
         alt="Background"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover fixed top-0 left-0 -z-10"
       />
-      <div className="max-w-[1140px] m-auto">
-        <div className="absolute top-[20%] md:top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
-            Workside Software
+      <div className="max-w-[1000px] m-auto pt-20 pb-8">
+        <div className="w-full flex flex-col text-white p-4">
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center">
+            Workside Software Registration
           </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl italic">
-            Registration
+          <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-8 text-center">
+            Join Our Logistics Platform
           </h2>
-          <br />
-          <p className="text-xl font-bold">First Name: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="firstName"
-            type="text"
-          ></input>
-          <p className="text-xl font-bold">Last Name: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="lastName"
-            type="text"
-          ></input>
-          <p className="text-xl font-bold">Nickname: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="nickName"
-            type="text"
-          ></input>
-          <p className="text-xl font-bold">Company: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="company"
-            type="text"
-          ></input>
-          <p className="text-xl font-bold">Class: *</p>
-          <div className="text-xl w-[250px] text-black ">
-            <Select
-              id="userClass"
-              options={options}
-              onChange={setClassName}
-              theme={customTheme}
-              className="mb-1 mt-1 border-black"
-              isMulti={false}
-              autoFocus={true}
-              isSearchable={false}
-            />
+          
+          <div className="bg-black/40 p-8 rounded-lg max-w-4xl mx-auto">
+            <p className="text-center mb-6 text-gray-200">
+              Register for access to our comprehensive logistics management platform. 
+              Choose your role and get started today.
+            </p>
+            
+            <form className="space-y-6">
+              {/* Personal Information */}
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-green-300">Personal Information</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      First Name *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="firstName"
+                      type="text"
+                      placeholder="Enter your first name"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      Last Name *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="lastName"
+                      type="text"
+                      placeholder="Enter your last name"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Professional Information */}
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-green-300">Professional Information</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      Nickname/Display Name *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="nickName"
+                      type="text"
+                      placeholder="How you'd like to be called"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      Company *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="company"
+                      type="text"
+                      placeholder="Your company name"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Account Type */}
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-green-300">Account Type</h3>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-green-200">
+                    User Type *
+                  </label>
+                  <div className="max-w-md">
+                    <Select
+                      id="userClass"
+                      options={options}
+                      onChange={setClassName}
+                      theme={customTheme}
+                      placeholder="Select your role..."
+                      isMulti={false}
+                      isSearchable={false}
+                      className="text-gray-800"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-300 mt-2">
+                    • Customer: Request services and track deliveries<br/>
+                    • Supplier: Receive requests and manage deliveries<br/>
+                    • Delivery Associate: Handle logistics operations
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact Information */}
+              <div>
+                <h3 className="text-lg font-bold mb-4 text-green-300">Contact Information</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      Email Address *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="email"
+                      type="email"
+                      placeholder="your.email@company.com"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                      Mobile Number *
+                    </label>
+                    <input
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      id="mobileNumber"
+                      type="tel"
+                      placeholder="(555) 123-4567"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Section */}
+              <div className="pt-4 text-center">
+                <button
+                  type="button"
+                  onClick={OnClick}
+                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  Register Now
+                </button>
+                <p className="text-xs text-gray-300 mt-4">
+                  By registering, you agree to our{" "}
+                  <a href="/terms" className="text-green-300 underline">Terms of Use</a> and{" "}
+                  <a href="/privacy" className="text-green-300 underline">Privacy Policy</a>.
+                </p>
+              </div>
+            </form>
           </div>
-          <p className="text-xl font-bold">Email: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email"
-            type="text"
-          ></input>
-          <p className="text-xl font-bold">Cell Number: *</p>
-          <input
-            class="shadow appearance-none border rounded w-[250px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="mobileNumber"
-            type="tel"
-            placeholder="(555)-555-5555"
-          ></input>
-          <br />
-          <button className="w-[250px]" onClick={OnClick}>
-            Register
-          </button>
+
+          {/* Support Section */}
+          <div className="mt-8 bg-green-900/30 p-6 rounded-lg text-center max-w-2xl mx-auto">
+            <h3 className="text-lg font-bold mb-3 text-green-300">Need Help?</h3>
+            <p className="mb-4 text-gray-200">
+              Having trouble with registration or have questions about our platform?
+            </p>
+            <div className="space-y-2">
+              <p>📧 Support: <a href="mailto:support@worksidesoftware.com" className="text-green-300 underline">support@worksidesoftware.com</a></p>
+              <p>📞 Phone: <span className="text-green-300">1-888-555-6666</span></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

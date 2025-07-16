@@ -12,20 +12,13 @@ import SMSTextOptInForm from "./components/SMSTextOptInForm";
 import SMSTermsAndConditions from "./components/SMSTermsAndConditions";
 import Privacy from "./components/Privacy";
 import RegistrationForm from "./components/RegistrationForm";
+import Support from "./components/Support";
+import FAQ from "./components/FAQ";
+import Terms from "./components/Terms";
 
-// import { registerLicense } from "@syncfusion/ej2-base";
 
-// import { pdfjs } from "react-pdf";
-
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   "pdfjs-dist/build/pdf.worker.min.js",
-//   import.meta.url
-// ).toString();
 
 function App() {
-  //   registerLicense(
-  //     "Ngo9BigBOggjHTQxAR8/V1NAaF1cXmhLYVFwWmFZfVpgcF9GYFZURWY/P1ZhSXxXdkdiUH5YcHRQR2BZU0U="
-  //   );
 
   return (
     <>
@@ -44,6 +37,9 @@ function App() {
         <Route path="/smsterms" element={<SMSTermsAndConditions />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/registration" element={<RegistrationForm />} />
+        <Route path="/support" element={<Support />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </>
   );

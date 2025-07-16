@@ -4,7 +4,7 @@ import { BsChatSquareDots } from "react-icons/bs";
 
 const TopBar = () => {
   return (
-    <div className="flex justify-between items-center px-4 py-2">
+    <div className="flex justify-between items-center px-4 py-2 bg-white relative z-20">
       <div className="flex items-center">
         <BsChatSquareDots
           size={20}

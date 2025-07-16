@@ -2,14 +2,14 @@ import React from "react";
 
 const Policies = () => {
   return (
-    <div className="w-full h-[90vh]">
+    <div className="w-full min-h-screen">
       <img
         src={process.env.PUBLIC_URL + "background.jpg"}
         alt="Background"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover fixed top-0 left-0 -z-10"
       />
-      <div className="max-w-[1140px] m-auto">
-        <div className="absolute top-[20%] md:top-[15%] w-full md:-[50%] max-w-[75%] h-full flex flex-col text-white p-4 overflow-auto hover:overflow-scroll">
+      <div className="max-w-[1200px] m-auto pt-24 pb-8">
+        <div className="w-full flex flex-col text-white p-4">
           <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl">
             Workside Software Policies
           </h1>

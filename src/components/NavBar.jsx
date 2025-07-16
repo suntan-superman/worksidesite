@@ -16,44 +16,59 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-full min-h-[50px] flex justify-between items-center absolute z-10 text-white bg-gray-700/80">
+    <div className="w-full min-h-[50px] flex justify-between items-center relative z-10 text-white bg-gray-800">
       <ul className="hidden sm:flex px-4">
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/">
             Home
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/products">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/products">
             Products
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/services">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/services">
             Services
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/contact">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/contact">
             Contact
           </Link>
         </li>
         <li>
           <Link
-            className="text-lg md:text-xl lg:text-2xl py-8"
+            className="text-sm md:text-base lg:text-lg py-8"
             to="/registration"
           >
             Registration
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/about">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/about">
             About
           </Link>
         </li>
         <li>
-          <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/policies">
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/policies">
             Policies
+          </Link>
+        </li>
+        <li>
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/support">
+            Support
+          </Link>
+        </li>
+        <li>
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/faq">
+            FAQ
+          </Link>
+        </li>
+        <li>
+          <Link className="text-sm md:text-base lg:text-lg py-8" to="/terms">
+            Terms
           </Link>
         </li>
         {/* ////////////////////////////////////////////////////////////////////// */}
@@ -89,13 +104,13 @@ const NavBar = () => {
       >
         <ul className="h-full w-full text-center pt-12">
           <li>
-            <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/">
+            <Link className="text-sm md:text-base lg:text-lg py-8" to="/">
               Home
             </Link>
           </li>
           <li>
             <Link
-              className="text-lg md:text-xl lg:text-2xl py-8"
+              className="text-sm md:text-base lg:text-lg py-8"
               to="/products"
             >
               Products
@@ -103,20 +118,20 @@ const NavBar = () => {
           </li>
           <li>
             <Link
-              className="text-lg md:text-xl lg:text-2xl py-8"
+              className="text-sm md:text-base lg:text-lg py-8"
               to="/services"
             >
               Services
             </Link>
           </li>
           <li>
-            <Link className="text-lg md:text-xl lg:text-2xl py-8" to="/contact">
+            <Link className="text-sm md:text-base lg:text-lg py-8" to="/contact">
               Contact
             </Link>
           </li>
           <li>
             <Link
-              className="text-lg md:text-xl lg:text-2xl py-8"
+              className="text-sm md:text-base lg:text-lg py-8"
               to="/registration"
             >
               Registration
@@ -124,10 +139,34 @@ const NavBar = () => {
           </li>
           <li>
             <Link
-              className="text-lg md:text-xl lg:text-2xl py-8"
+              className="text-sm md:text-base lg:text-lg py-8"
               to="/policies"
             >
               Policies
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm md:text-base lg:text-lg py-8"
+              to="/support"
+            >
+              Support
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm md:text-base lg:text-lg py-8"
+              to="/faq"
+            >
+              FAQ
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm md:text-base lg:text-lg py-8"
+              to="/terms"
+            >
+              Terms
             </Link>
           </li>
           {/* <li>
