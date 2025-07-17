@@ -69,7 +69,7 @@ const Products = () => {
           
           <div className="mb-8 bg-black/40 p-6 rounded-lg">
             <h3 className="text-xl font-bold mb-4 text-green-300">Platform Overview</h3>
-            <div className="grid md:grid-cols-3 gap-6 text-sm md:text-base">
+            <div className="grid md:grid-cols-3 gap-6 text-base md:text-base">
               <div className="bg-green-900/30 p-4 rounded-lg">
                 <h4 className="font-semibold text-green-200 mb-2">🖥️ Web Host App</h4>
                 <p>Administrative dashboard for managing operations, vendor selection, and real-time tracking</p>
@@ -105,7 +105,7 @@ const Products = () => {
                     className="w-full h-48 object-cover rounded-lg mb-3 hover:scale-105 transition-transform"
                   />
                   <h4 className="font-semibold text-green-200 mb-2">{screenshot.title}</h4>
-                  <p className="text-sm text-gray-300">{screenshot.description}</p>
+                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed">{screenshot.description}</p>
                 </div>
               ))}
             </div>
@@ -131,7 +131,7 @@ const Products = () => {
                     className="w-full h-64 object-cover rounded-lg mb-3 hover:scale-105 transition-transform"
                   />
                   <h4 className="font-semibold text-green-200 mb-2">{screenshot.title}</h4>
-                  <p className="text-sm text-gray-300">{screenshot.description}</p>
+                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed">{screenshot.description}</p>
                 </div>
               ))}
             </div>

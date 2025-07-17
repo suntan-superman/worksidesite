@@ -79,11 +79,11 @@ const RegistrationForm = () => {
                 <h3 className="text-lg font-bold mb-4 text-green-300">Personal Information</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       First Name *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="firstName"
                       type="text"
                       placeholder="Enter your first name"
@@ -91,11 +91,11 @@ const RegistrationForm = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       Last Name *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="lastName"
                       type="text"
                       placeholder="Enter your last name"
@@ -110,11 +110,11 @@ const RegistrationForm = () => {
                 <h3 className="text-lg font-bold mb-4 text-green-300">Professional Information</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       Nickname/Display Name *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="nickName"
                       type="text"
                       placeholder="How you'd like to be called"
@@ -122,11 +122,11 @@ const RegistrationForm = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       Company *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="company"
                       type="text"
                       placeholder="Your company name"
@@ -140,10 +140,10 @@ const RegistrationForm = () => {
               <div>
                 <h3 className="text-lg font-bold mb-4 text-green-300">Account Type</h3>
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-green-200">
+                  <label className="block text-base font-semibold mb-3 text-green-200">
                     User Type *
                   </label>
-                  <div className="max-w-md">
+                  <div className="w-full">
                     <Select
                       id="userClass"
                       options={options}
@@ -153,12 +153,28 @@ const RegistrationForm = () => {
                       isMulti={false}
                       isSearchable={false}
                       className="text-gray-800"
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          minHeight: '56px',
+                          fontSize: '16px',
+                          padding: '0 8px'
+                        }),
+                        placeholder: (provided) => ({
+                          ...provided,
+                          fontSize: '16px'
+                        }),
+                        singleValue: (provided) => ({
+                          ...provided,
+                          fontSize: '16px'
+                        })
+                      }}
                     />
                   </div>
-                  <p className="text-xs text-gray-300 mt-2">
-                    • Customer: Request services and track deliveries<br/>
-                    • Supplier: Receive requests and manage deliveries<br/>
-                    • Delivery Associate: Handle logistics operations
+                  <p className="text-sm text-gray-300 mt-3 leading-relaxed">
+                    • <strong>Customer:</strong> Request services and track deliveries<br/>
+                    • <strong>Supplier:</strong> Receive requests and manage deliveries<br/>
+                    • <strong>Delivery Associate:</strong> Handle logistics operations
                   </p>
                 </div>
               </div>
@@ -168,38 +184,42 @@ const RegistrationForm = () => {
                 <h3 className="text-lg font-bold mb-4 text-green-300">Contact Information</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       Email Address *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="email"
                       type="email"
                       placeholder="your.email@company.com"
                       required
+                      autoComplete="email"
+                      inputMode="email"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-green-200">
+                    <label className="block text-base font-semibold mb-3 text-green-200">
                       Mobile Number *
                     </label>
                     <input
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500"
+                      className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg text-gray-800 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200"
                       id="mobileNumber"
                       type="tel"
                       placeholder="(555) 123-4567"
                       required
+                      autoComplete="tel"
+                      inputMode="tel"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Submit Section */}
-              <div className="pt-4 text-center">
+              <div className="pt-6 text-center">
                 <button
                   type="button"
                   onClick={OnClick}
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-12 text-lg rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 min-h-[56px]"
                 >
                   Register Now
                 </button>
