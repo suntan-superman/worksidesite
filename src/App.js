@@ -1,6 +1,7 @@
 import React from "react";
 import TopBar from "./components/TopBar";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
 import WorksidePanel from "./components/WorksidePanel";
 import About from "./components/About";
 import Products from "./components/Products";
@@ -21,27 +22,30 @@ import Terms from "./components/Terms";
 function App() {
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <div>
         <TopBar />
         <NavBar />
       </div>
-      <Routes>
-        <Route path="/" element={<WorksidePanel />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/contact" element={<ContactWorkside />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/policies" element={<Policies />} />
-        <Route path="/smstextoptinform" element={<SMSTextOptInForm />} />
-        <Route path="/smsterms" element={<SMSTermsAndConditions />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/registration" element={<RegistrationForm />} />
-        <Route path="/support" element={<Support />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/terms" element={<Terms />} />
-      </Routes>
-    </>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<WorksidePanel />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<ContactWorkside />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/policies" element={<Policies />} />
+          <Route path="/smstextoptinform" element={<SMSTextOptInForm />} />
+          <Route path="/smsterms" element={<SMSTermsAndConditions />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/registration" element={<RegistrationForm />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
   );
 }
 
