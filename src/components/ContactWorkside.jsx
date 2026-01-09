@@ -10,7 +10,7 @@ const ContactWorkside = () => {
       />
       <div className="max-w-[1200px] m-auto pt-10 pb-8">
         <div className="w-full flex flex-col text-white p-4">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center">
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center text-white">
             Contact Workside Software
           </h1>
           <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-8 text-center">
@@ -19,58 +19,58 @@ const ContactWorkside = () => {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             {/* Sales & Inquiries */}
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-4 text-green-300">💼 Sales & Product Inquiries</h3>
+            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
+              <h3 className="text-lg font-bold mb-4 text-white">💼 Sales & Product Inquiries</h3>
               <div className="space-y-3">
-                <p className="text-sm">Discover how our software solutions can transform your operations.</p>
+                <p className="text-sm text-white">Discover how our software solutions can transform your operations.</p>
                 <div>
-                  <p className="font-semibold text-green-200">Email:</p>
-                  <a href="mailto:contact@worksidesoftware.com" className="text-green-300 underline text-sm">
+                  <p className="font-semibold text-white">Email:</p>
+                  <a href="mailto:contact@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
                     contact@worksidesoftware.com
                   </a>
                 </div>
                 <div>
-                  <p className="font-semibold text-green-200">Phone:</p>
-                  <a href="tel:8885557777" className="text-green-300">1-888-555-7777</a>
+                  <p className="font-semibold text-white">Phone:</p>
+                  <a href="tel:202-933-5631" className="text-white font-medium hover:underline">202-933-5631</a>
                 </div>
               </div>
             </div>
 
             {/* Customer Support */}
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-4 text-green-300">🛠️ Customer Support</h3>
+            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
+              <h3 className="text-lg font-bold mb-4 text-white">🛠️ Customer Support</h3>
               <div className="space-y-3">
-                <p className="text-sm">Existing clients needing assistance with our solutions.</p>
+                <p className="text-sm text-white">Existing clients needing assistance with our solutions.</p>
                 <div>
-                  <p className="font-semibold text-green-200">Email:</p>
-                  <a href="mailto:support@worksidesoftware.com" className="text-green-300 underline text-sm">
+                  <p className="font-semibold text-white">Email:</p>
+                  <a href="mailto:support@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
                     support@worksidesoftware.com
                   </a>
                 </div>
                 <div>
-                  <p className="font-semibold text-green-200">Phone:</p>
-                  <a href="tel:8885556666" className="text-green-300">1-888-555-6666</a>
+                  <p className="font-semibold text-white">Phone:</p>
+                  <a href="tel:202-933-5631" className="text-white font-medium hover:underline">202-933-5631</a>
                 </div>
                 <div>
-                  <p className="font-semibold text-green-200">Hours:</p>
-                  <p className="text-sm">Mon-Fri: 7am-5pm PST</p>
+                  <p className="font-semibold text-white">Hours:</p>
+                  <p className="text-sm text-white">Mon-Fri: 7am-5pm PST</p>
                 </div>
               </div>
             </div>
 
             {/* Careers */}
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-lg font-bold mb-4 text-green-300">🚀 Careers</h3>
+            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
+              <h3 className="text-lg font-bold mb-4 text-white">🚀 Careers</h3>
               <div className="space-y-3">
-                <p className="text-sm">Join our team and help shape the future of logistics technology.</p>
+                <p className="text-sm text-white">Join our team and help shape the future of logistics technology.</p>
                 <div>
-                  <p className="font-semibold text-green-200">Email:</p>
-                  <a href="mailto:careers@worksidesoftware.com" className="text-green-300 underline text-sm">
+                  <p className="font-semibold text-white">Email:</p>
+                  <a href="mailto:careers@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
                     careers@worksidesoftware.com
                   </a>
                 </div>
                 <div>
-                  <a href="/contact" className="inline-block bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
+                  <a href="/contact" className="inline-block bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
                     View Opportunities
                   </a>
                 </div>
@@ -80,40 +80,40 @@ const ContactWorkside = () => {
 
           {/* Main Contact Section */}
           <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div className="bg-green-900/30 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-green-300">Get In Touch</h3>
-              <p className="mb-4 text-gray-200">
+            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
+              <h3 className="text-xl font-bold mb-4 text-white">Get In Touch</h3>
+              <p className="mb-4 text-white">
                 Whether you're seeking solutions to complex challenges, interested in learning more about our innovative software, 
                 or have questions about how we can support your business objectives, our team is ready to help.
               </p>
               <div className="space-y-3">
                 <div>
-                  <p className="font-semibold text-green-200">Website:</p>
-                  <a href="https://www.worksidesoftware.com" className="text-green-300 underline">
+                  <p className="font-semibold text-white">Website:</p>
+                  <a href="https://www.worksidesoftware.com" className="text-white font-medium hover:underline">
                     www.worksidesoftware.com
                   </a>
                 </div>
                 <div>
-                  <p className="font-semibold text-green-200">Location:</p>
-                  <p className="text-gray-200">Bakersfield, CA</p>
+                  <p className="font-semibold text-white">Location:</p>
+                  <p className="text-white">Bakersfield, CA</p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-green-900/30 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-4 text-green-300">Connect With Us</h3>
-              <p className="mb-4 text-gray-200">
+            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
+              <h3 className="text-xl font-bold mb-4 text-white">Connect With Us</h3>
+              <p className="mb-4 text-white">
                 Stay connected with Workside Software through our social media channels for the latest news, 
                 insights, and innovations in logistics technology.
               </p>
               <div className="flex space-x-4">
-                <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
+                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
                   LinkedIn
                 </button>
-                <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
+                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
                   Twitter
                 </button>
-                <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-semibold transition-colors">
+                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
                   Facebook
                 </button>
               </div>
@@ -121,19 +121,19 @@ const ContactWorkside = () => {
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-black/40 p-6 rounded-lg text-center">
-            <h3 className="text-xl font-bold mb-4 text-green-300">Ready to Get Started?</h3>
-            <p className="mb-6 text-gray-200">
+          <div className="bg-black/40 p-6 rounded-lg text-center border border-gray-600">
+            <h3 className="text-xl font-bold mb-4 text-white">Ready to Get Started?</h3>
+            <p className="mb-6 text-white">
               Experience the power of integrated logistics management with Workside Software.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <a href="/products" className="bg-green-600 hover:bg-green-700 px-6 py-3 rounded font-semibold transition-colors">
+              <a href="/products" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
                 View Products
               </a>
-              <a href="/support" className="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded font-semibold transition-colors">
+              <a href="/support" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
                 Get Support
               </a>
-              <a href="/registration" className="bg-purple-600 hover:bg-purple-700 px-6 py-3 rounded font-semibold transition-colors">
+              <a href="/registration" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
                 Register Now
               </a>
             </div>

@@ -10,14 +10,11 @@ export const APP_INFO = {
   
   // Copyright and Legal
   copyrightYear: 2026,
-  copyrightStartYear: 2024, // Year the company was founded (for ranges like "2024-2026")
+  copyrightStartYear: 2024,
   
   // Contact Information
   phone: {
-    sales: "1-888-555-7777",
-    support: "1-888-555-6666",
-    technical: "1-888-555-TECH (8324)",
-    main: "1-800-123-4567"
+    main: "202-933-5631"
   },
   
   email: {

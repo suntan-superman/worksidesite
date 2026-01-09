@@ -60,7 +60,7 @@ const RegistrationForm = () => {
       />
       <div className="max-w-[1000px] m-auto pt-10 pb-8">
         <div className="w-full flex flex-col text-white p-4">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center">
+          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center text-white">
             Workside Software Registration
           </h1>
           <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-8 text-center">
@@ -233,14 +233,14 @@ const RegistrationForm = () => {
           </div>
 
           {/* Support Section */}
-          <div className="mt-8 bg-green-900/30 p-6 rounded-lg text-center max-w-2xl mx-auto">
-            <h3 className="text-lg font-bold mb-3 text-green-300">Need Help?</h3>
-            <p className="mb-4 text-gray-200">
+          <div className="mt-8 bg-black/40 p-6 rounded-lg text-center max-w-2xl mx-auto border border-gray-600">
+            <h3 className="text-lg font-bold mb-3 text-white">Need Help?</h3>
+            <p className="mb-4 text-white">
               Having trouble with registration or have questions about our platform?
             </p>
             <div className="space-y-2">
-              <p>📧 Support: <a href="mailto:support@worksidesoftware.com" className="text-green-300 underline">support@worksidesoftware.com</a></p>
-              <p>📞 Phone: <span className="text-green-300">1-888-555-6666</span></p>
+              <p className="text-white">📧 Support: <a href="mailto:support@worksidesoftware.com" className="text-white font-medium hover:underline">support@worksidesoftware.com</a></p>
+              <p className="text-white">📞 Phone: <span className="text-white font-medium">202-933-5631</span></p>
             </div>
           </div>
         </div>

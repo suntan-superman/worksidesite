@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 
 const FAQ = () => {
-  const [openSections, setOpenSections] = useState({ general: true });
-
-  const toggleSection = (section) => {
-    setOpenSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
+  const [openQuestion, setOpenQuestion] = useState(null);
 
   const faqSections = [
     {
@@ -25,7 +18,7 @@ const FAQ = () => {
         },
         {
           q: 'How much does Workside cost?',
-          a: 'Pricing varies based on your organization size and needs. Contact our sales team at contact@worksidesoftware.com or call 1-888-555-7777 for a custom quote.'
+          a: 'Pricing varies based on your organization size and needs. Contact our sales team at contact@worksidesoftware.com or call 202-933-5631 for a custom quote.'
         },
         {
           q: 'Is there a free trial available?',
@@ -146,64 +139,63 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen">
-      <img
-        src={process.env.PUBLIC_URL + "background.jpg"}
-        alt="Background"
-        className="w-full h-full object-cover fixed top-0 left-0 -z-10"
-      />
-      <div className="max-w-[1200px] m-auto pt-12 pb-8">
-        <div className="w-full flex flex-col p-4">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-white">
-            Frequently Asked Questions
-          </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-6 text-white">
-            Find Answers to Common Questions
-          </h2>
-          
-          <div className="space-y-4">
-            {faqSections.map((section) => (
-              <div key={section.id} className="bg-black/40 rounded-lg p-4">
-                <button
-                  onClick={() => toggleSection(section.id)}
-                  className="w-full text-left flex justify-between items-center font-bold text-lg md:text-xl text-black hover:text-gray-700 transition-colors"
-                >
-                  {section.title}
-                  <span className="text-2xl">
-                    {openSections[section.id] ? '−' : '+'}
-                  </span>
-                </button>
-                
-                {openSections[section.id] && (
-                  <div className="mt-4 space-y-4">
-                    {section.questions.map((item, index) => (
-                      <div key={index} className="bg-white p-4 rounded-lg border-l-4 border-green-300">
-                        <h4 className="font-semibold text-white mb-3 bg-gray-800 p-3 rounded">
-                          {item.q}
-                        </h4>
-                        <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                          {item.a}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+    <div className="w-full bg-white">
+      {/* Header */}
+      <div className="py-16 md:py-20 border-b border-gray-200">
+        <div className="container-max">
+          <h1 className="mb-3">Frequently Asked Questions</h1>
+          <p className="text-lg text-gray-600">Find answers to common questions about Workside Software</p>
+        </div>
+      </div>
 
-                              <div className="mt-8 bg-green-900/30 p-6 rounded-lg">
-            <h3 className="text-xl font-bold mb-3 text-green-300">Still Have Questions?</h3>
-            <p className="mb-4 text-white">Can't find what you're looking for? Our support team is here to help!</p>
-            <div className="space-y-2 text-white">
-              <p>📧 Email: <a href="mailto:support@worksidesoftware.com" className="text-green-300 underline">support@worksidesoftware.com</a></p>
-              <p>📞 Phone: <span className="text-green-300">1-888-555-6666</span></p>
-                <p>🕐 Hours: Monday - Friday, 7:00 AM - 5:00 PM PST</p>
-              <p className="mt-3">
-                <a href="/support" className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded font-semibold transition-colors">
-                  Visit Support Center
+      {/* Content */}
+      <div className="container-max section-spacing">
+        <div className="space-y-8 max-w-3xl">
+          {faqSections.map((section) => (
+            <div key={section.id}>
+              <h2 className="mb-6 text-lg font-semibold text-gray-900">{section.title}</h2>
+              
+              <div className="space-y-4">
+                {section.questions.map((item, index) => (
+                  <div key={index} className="border border-gray-200 rounded-lg">
+                    <button
+                      onClick={() => setOpenQuestion(openQuestion === `${section.id}-${index}` ? null : `${section.id}-${index}`)}
+                      className="w-full text-left p-4 hover:bg-gray-50 transition-colors flex justify-between items-center"
+                    >
+                      <h3 className="font-medium text-gray-900">{item.q}</h3>
+                      <span className="text-gray-600 ml-4">
+                        {openQuestion === `${section.id}-${index}` ? '−' : '+'}
+                      </span>
+                    </button>
+                    
+                    {openQuestion === `${section.id}-${index}` && (
+                      <div className="px-4 pb-4 border-t border-gray-200 bg-gray-50">
+                        <p className="text-gray-600 mt-4">{item.a}</p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 max-w-3xl">
+          <div className="bg-gray-50 p-8 rounded-lg border border-gray-200">
+            <h2 className="text-xl font-semibold mb-3">Still have questions?</h2>
+            <p className="text-gray-600 mb-6">Our support team is here to help.</p>
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-medium text-gray-900">Email</p>
+                <a href="mailto:support@worksidesoftware.com" className="text-base hover:text-gray-600">
+                  support@worksidesoftware.com
                 </a>
-              </p>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-900">Hours</p>
+                <p className="text-gray-600">Monday - Friday, 7:00 AM - 5:00 PM PST</p>
+              </div>
             </div>
           </div>
         </div>

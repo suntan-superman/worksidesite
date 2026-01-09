@@ -18,51 +18,31 @@ const NavBar = () => {
 
   return (
     <div className="w-full min-h-[50px] flex justify-between items-center relative z-10 text-white bg-gray-800">
-      <ul className="hidden sm:flex px-4">
+      <ul className="hidden sm:flex px-4 gap-6">
         <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/">
+          <Link className="text-sm md:text-base lg:text-lg py-8 text-white font-medium hover:text-gray-300 transition-colors" to="/">
             Home
           </Link>
         </li>
         <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/products">
+          <Link className="text-sm md:text-base lg:text-lg py-8 text-white font-medium hover:text-gray-300 transition-colors" to="/products">
             Products
           </Link>
         </li>
         <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/services">
+          <Link className="text-sm md:text-base lg:text-lg py-8 text-white font-medium hover:text-gray-300 transition-colors" to="/services">
             Services
           </Link>
         </li>
         <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/contact">
+          <Link className="text-sm md:text-base lg:text-lg py-8 text-white font-medium hover:text-gray-300 transition-colors" to="/contact">
             Contact
           </Link>
         </li>
 
         <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/about">
+          <Link className="text-sm md:text-base lg:text-lg py-8 text-white font-medium hover:text-gray-300 transition-colors" to="/about">
             About
-          </Link>
-        </li>
-        <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/policies">
-            Policies
-          </Link>
-        </li>
-        <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/support">
-            Support
-          </Link>
-        </li>
-        <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/faq">
-            FAQ
-          </Link>
-        </li>
-        <li>
-          <Link className="text-sm md:text-base lg:text-lg py-8" to="/terms">
-            Terms
           </Link>
         </li>
         {/* ////////////////////////////////////////////////////////////////////// */}
