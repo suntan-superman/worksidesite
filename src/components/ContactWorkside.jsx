@@ -1,147 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { APP_INFO } from "../constants/appInfo";
 
-const ContactWorkside = () => {
-  return (
-    <div className="w-full min-h-screen">
-      <img
-        src={process.env.PUBLIC_URL + "background.jpg"}
-        alt="Background"
-        className="w-full h-full object-cover fixed top-0 left-0 -z-10"
-      />
-      <div className="max-w-[1200px] m-auto pt-10 pb-8">
-        <div className="w-full flex flex-col text-white p-4">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center text-white">
-            Contact Workside Software
-          </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-8 text-center">
-            Your Efficiency Partner
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {/* Sales & Inquiries */}
-            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
-              <h3 className="text-lg font-bold mb-4 text-white">💼 Sales & Product Inquiries</h3>
-              <div className="space-y-3">
-                <p className="text-sm text-white">Discover how our software solutions can transform your operations.</p>
-                <div>
-                  <p className="font-semibold text-white">Email:</p>
-                  <a href="mailto:contact@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
-                    contact@worksidesoftware.com
-                  </a>
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Phone:</p>
-                  <a href="tel:202-933-5631" className="text-white font-medium hover:underline">202-933-5631</a>
-                </div>
-              </div>
-            </div>
+export default function ContactWorkside() {
+  const [sent, setSent] = useState(false);
+  const [method, setMethod] = useState("Email");
 
-            {/* Customer Support */}
-            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
-              <h3 className="text-lg font-bold mb-4 text-white">🛠️ Customer Support</h3>
-              <div className="space-y-3">
-                <p className="text-sm text-white">Existing clients needing assistance with our solutions.</p>
-                <div>
-                  <p className="font-semibold text-white">Email:</p>
-                  <a href="mailto:support@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
-                    support@worksidesoftware.com
-                  </a>
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Phone:</p>
-                  <a href="tel:202-933-5631" className="text-white font-medium hover:underline">202-933-5631</a>
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Hours:</p>
-                  <p className="text-sm text-white">Mon-Fri: 7am-5pm PST</p>
-                </div>
-              </div>
-            </div>
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    if (data.get("website")) return;
+    const name = data.get("name");
+    const email = data.get("email");
+    const company = data.get("company") || "Not provided";
+    const phone = data.get("phone") || "Not provided";
+    const project = data.get("project");
+    const subject = encodeURIComponent(`Project inquiry from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nCompany: ${company}\nPreferred contact: ${method}\nPhone: ${phone}\n\nProject details:\n${project}`);
+    window.location.href = `mailto:${APP_INFO.email.contact}?subject=${subject}&body=${body}`;
+    setSent(true);
+  }
 
-            {/* Careers */}
-            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
-              <h3 className="text-lg font-bold mb-4 text-white">🚀 Careers</h3>
-              <div className="space-y-3">
-                <p className="text-sm text-white">Join our team and help shape the future of logistics technology.</p>
-                <div>
-                  <p className="font-semibold text-white">Email:</p>
-                  <a href="mailto:careers@worksidesoftware.com" className="text-white font-medium hover:underline text-sm">
-                    careers@worksidesoftware.com
-                  </a>
-                </div>
-                <div>
-                  <a href="/contact" className="inline-block bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
-                    View Opportunities
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Main Contact Section */}
-          <div className="grid md:grid-cols-2 gap-8 mb-8">
-            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
-              <h3 className="text-xl font-bold mb-4 text-white">Get In Touch</h3>
-              <p className="mb-4 text-white">
-                Whether you're seeking solutions to complex challenges, interested in learning more about our innovative software, 
-                or have questions about how we can support your business objectives, our team is ready to help.
-              </p>
-              <div className="space-y-3">
-                <div>
-                  <p className="font-semibold text-white">Website:</p>
-                  <a href="https://www.worksidesoftware.com" className="text-white font-medium hover:underline">
-                    www.worksidesoftware.com
-                  </a>
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Location:</p>
-                  <p className="text-white">Bakersfield, CA</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg border border-gray-600">
-              <h3 className="text-xl font-bold mb-4 text-white">Connect With Us</h3>
-              <p className="mb-4 text-white">
-                Stay connected with Workside Software through our social media channels for the latest news, 
-                insights, and innovations in logistics technology.
-              </p>
-              <div className="flex space-x-4">
-                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
-                  LinkedIn
-                </button>
-                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
-                  Twitter
-                </button>
-                <button className="bg-white text-gray-900 hover:bg-gray-100 px-4 py-2 rounded text-sm font-semibold transition-colors">
-                  Facebook
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="bg-black/40 p-6 rounded-lg text-center border border-gray-600">
-            <h3 className="text-xl font-bold mb-4 text-white">Ready to Get Started?</h3>
-            <p className="mb-6 text-white">
-              Experience the power of integrated logistics management with Workside Software.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="/products" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
-                View Products
-              </a>
-              <a href="/support" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
-                Get Support
-              </a>
-              <a href="/registration" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded font-semibold transition-colors">
-                Register Now
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ContactWorkside;
+  return <main className="contact-page"><div className="container-max"><div className="contact-grid"><div className="contact-copy"><p className="eyebrow">LET’S TALK</p><h1>Tell us what<br/>you’re working on.</h1><p>Share a little about the challenge, the idea, or the process you’d like to improve. We’ll start there.</p><div className="contact-direct"><span>Prefer email?</span><a href={`mailto:${APP_INFO.email.contact}`}>{APP_INFO.email.contact} ↗</a></div><div className="contact-location">BAKERSFIELD, CALIFORNIA<br/>Serving teams building useful software.</div></div><form className="contact-form" onSubmit={handleSubmit}>
+      <div className="form-row"><label>Your name<input name="name" autoComplete="name" required placeholder="Name"/></label><label>Email address<input name="email" type="email" autoComplete="email" required placeholder="you@company.com"/></label></div>
+      <label>Company <span className="optional">OPTIONAL</span><input name="company" autoComplete="organization" placeholder="Company name"/></label>
+      <label>What would you like to build or improve?<textarea name="project" required rows="5" placeholder="A few details about your project, goals, or current workflow…"/></label>
+      <fieldset><legend>How would you prefer we contact you?</legend><div className="method-options">{["Email", "Phone", "Either"].map((option)=><label className={method===option?"method-option selected":"method-option"} key={option}><input type="radio" name="preferred" value={option} checked={method===option} onChange={()=>setMethod(option)}/>{option}</label>)}</div></fieldset>
+      {method !== "Email" && <label>Phone number<input name="phone" type="tel" autoComplete="tel" required placeholder="(555) 555-5555"/></label>}
+      <div className="honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" tabIndex="-1" autoComplete="off"/></label></div>
+      <button type="submit" className="button button-lime form-submit">Prepare your email <span aria-hidden="true">↗</span></button>
+      <p className="form-note">This opens your email app with your message addressed to Workside Software. Nothing is sent from this page.</p>
+      {sent && <p role="status" className="form-status">Your email app should be open with the message ready. If it didn’t open, email <a href={`mailto:${APP_INFO.email.contact}`}>{APP_INFO.email.contact}</a>.</p>}
+    </form></div></div></main>;
+}

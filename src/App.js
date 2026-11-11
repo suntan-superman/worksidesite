@@ -4,11 +4,10 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import WorksidePanel from "./components/WorksidePanel";
 import About from "./components/About";
-import Products from "./components/Products";
 import Services from "./components/Services";
 import ContactWorkside from "./components/ContactWorkside";
 import Policies from "./components/Policies";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SMSTextOptInForm from "./components/SMSTextOptInForm";
 import SMSTermsAndConditions from "./components/SMSTermsAndConditions";
 import Privacy from "./components/Privacy";
@@ -16,6 +15,8 @@ import RegistrationForm from "./components/RegistrationForm";
 import Support from "./components/Support";
 import FAQ from "./components/FAQ";
 import Terms from "./components/Terms";
+import { Portfolio, ProjectDetail } from "./components/Portfolio";
+import Seo from "./components/Seo";
 
 
 
@@ -28,9 +29,12 @@ function App() {
         <NavBar />
       </div>
       <main className="flex-grow">
+        <Seo />
         <Routes>
           <Route path="/" element={<WorksidePanel />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/work" element={<Portfolio />} />
+          <Route path="/work/:slug" element={<ProjectDetail />} />
+          <Route path="/products" element={<Navigate to="/work/workside-logistics" replace />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<ContactWorkside />} />
           <Route path="/about" element={<About />} />

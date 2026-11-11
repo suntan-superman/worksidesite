@@ -1,134 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Services = () => {
-  return (
-    <div className="w-full min-h-screen">
-      <img
-        src={process.env.PUBLIC_URL + "background.jpg"}
-        alt="Background"
-        className="w-full h-full object-cover fixed top-0 left-0 -z-10"
-      />
-      <div className="max-w-[1200px] m-auto pt-10 pb-8">
-        <div className="w-full flex flex-col text-white p-4">
-          <h1 className="font-bold text-2xl md:text-3xl lg:text-4xl mb-4 text-center text-white">
-            Workside Software Services
-          </h1>
-          <h2 className="text-xl md:text-2xl lg:text-3xl italic mb-8 text-center">
-            Your Efficiency Partner
-          </h2>
-          
-          <div className="mb-6 bg-black/40 p-6 rounded-lg">
-            <p className="text-white">
-              At Workside Software, we are dedicated to powering the future of the
-              oil and gas industry through innovative software solutions. Our
-              comprehensive suite of services is designed to address the unique
-              challenges faced by this sector, ensuring efficiency, compliance,
-              and profitability.
-            </p>
-          </div>
+const services = [
+  ["01", "Custom Web Applications", "Business software designed around your processes, with considered interfaces and reliable back-end systems.", ["Customer and operations portals", "Workflow and case management", "Integrations with your existing tools"]],
+  ["02", "iOS and Android Mobile Apps", "Mobile products for customers and teams, from early product definition through store release and ongoing updates.", ["Native and cross-platform apps", "Mobile-first product design", "App Store and Google Play delivery"]],
+  ["03", "AI and Business Automation", "Applied AI and automation for customer communications, internal workflows, and repetitive business tasks.", ["AI assistants and call handling", "Workflow automation", "Human review and escalation paths"]],
+  ["04", "Business Intelligence and Analytics", "Clearer views of the information your business already has, organized to support day-to-day decisions.", ["Operational dashboards", "Data pipelines and reporting", "Decision support tools"]],
+  ["05", "SaaS Product Development", "A practical path from product idea to a deployable software service, including the systems behind it.", ["Product discovery and architecture", "Account and subscription workflows", "Production deployment"]],
+  ["06", "SEO and Digital Growth", "A developing offering that connects a sound website foundation with search visibility and useful measurement.", ["Technical SEO foundations", "Content and page structure", "Analytics setup"]],
+];
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Data Management and Analytics</h3>
-              <p className="text-white">
-                Harness the power of your data with our advanced analytics platform.
-                From production to distribution, our software provides real-time
-                insights to optimize operations, reduce costs, and enhance
-                decision-making processes.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Asset Management</h3>
-              <p className="text-white">
-                Maximize the performance and lifecycle of your assets. Our solutions
-                offer predictive maintenance, asset tracking, and management
-                capabilities, reducing downtime and extending the lifespan of your
-                equipment.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Regulatory Compliance</h3>
-              <p className="text-white">
-                Navigate the complex regulatory landscape with ease. Our software
-                ensures compliance with local and international standards, helping
-                you avoid costly penalties and maintain operational integrity.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Supply Chain Optimization</h3>
-              <p className="text-white">
-                Streamline your supply chain for peak efficiency. We provide tools
-                for logistics management, demand forecasting, and inventory control,
-                ensuring that your operations run smoothly and meet market demands.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Digital Transformation Services</h3>
-              <p className="text-white">
-                Embrace the digital revolution. Our experts work closely with your
-                team to implement digital solutions that transform your operations,
-                from field data capture to enterprise resource planning (ERP)
-                systems integration.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Custom Software Development</h3>
-              <p className="text-white">
-                Tailored solutions to meet your unique needs. Our experienced
-                developers can create custom software that integrates seamlessly
-                with your existing systems, enhancing functionality and improving
-                user experience.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Training and Support</h3>
-              <p className="text-white">
-                Empower your team with knowledge. We offer comprehensive training
-                programs and ongoing support to ensure your staff is proficient with
-                our software, maximizing the value of your investment.
-              </p>
-            </div>
-
-            <div className="bg-black/40 p-6 rounded-lg">
-              <h3 className="text-xl font-bold mb-3 text-green-300">Why Choose Workside Software?</h3>
-              <div className="space-y-2 text-white">
-                <p className="text-white"><strong>Industry Expertise:</strong> With years of experience in the oil and gas
-                sector, we understand your challenges and how to solve them.</p>
-                <p className="text-white"><strong>Innovation-Driven:</strong> We are constantly evolving our technology to meet
-                the needs of a changing industry.</p>
-                <p className="text-white"><strong>Customer-Centric Approach:</strong> Your success is our priority. We are committed to providing solutions
-                that deliver tangible benefits to your business.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-8 bg-black/40 p-6 rounded-lg text-center border border-gray-600">
-            <h3 className="text-xl font-bold mb-3 text-white">Ready to Transform Your Operations?</h3>
-            <p className="mb-4 text-white">
-              At Workside Software, we are more than a software provider; we are a partner in
-              your success. Contact us today to learn how we can help you achieve
-              your operational goals and drive your business forward.
-            </p>
-            <div className="space-y-2">
-              <p className="text-white">📞 Contact Sales: <a href="tel:202-933-5631" className="text-white font-medium hover:underline">202-933-5631</a></p>
-              <p className="text-white">📧 Email: <a href="mailto:contact@worksidesoftware.com" className="text-white font-medium hover:underline">contact@worksidesoftware.com</a></p>
-              <p className="mt-3">
-                <a href="/contact" className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-2 rounded font-semibold transition-colors">
-                  Get Started Today
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Services;
+export default function Services() {
+  return <main className="page-shell"><div className="container-max"><header className="page-intro"><p className="eyebrow eyebrow-dark">SERVICES</p><h1>Engineering for<br/>the next step.</h1><p>From a focused application to a complete digital product, we build technology that fits the way your business operates.</p></header><div className="services-list">{services.map(([number,title,description,items])=><article className="service-row" id={title.toLowerCase().replaceAll(" ","-")} key={title}><span className="service-number">{number}</span><div className="service-copy"><h2>{title}</h2><p>{description}</p></div><ul>{items.map(item=><li key={item}>{item}</li>)}</ul></article>)}</div><section className="services-cta"><div><p className="eyebrow">START WITH A CONVERSATION</p><h2>Tell us what needs<br/>to work better.</h2></div><Link to="/contact" className="button button-lime">Discuss Your Project <span aria-hidden="true">↗</span></Link></section></div></main>;
+}

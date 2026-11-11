@@ -7,13 +7,17 @@ const Privacy = () => {
       <div className="py-16 md:py-20 border-b border-gray-200">
         <div className="container-max">
           <h1 className="mb-3">Privacy Policy</h1>
-          <p className="text-gray-600">How we protect and handle your information</p>
+          <p className="text-gray-600">Information about Workside products and project inquiries</p>
         </div>
       </div>
 
       {/* Content */}
       <div className="container-max section-spacing max-w-3xl">
         <div className="space-y-12">
+          <section>
+            <h2 className="mb-4">About this website</h2>
+            <p className="text-gray-600">The project inquiry form on this website prepares an email in your email application. It does not submit information to a Workside web form. If you send the message, Workside receives the details you chose to include at the email address shown on the form.</p>
+          </section>
           <section>
             <h2 className="mb-4">1. Information We Collect</h2>
             <div className="space-y-3 text-gray-600">
@@ -48,10 +52,8 @@ const Privacy = () => {
             <h2 className="mb-4">3. Data Security</h2>
             <p className="text-gray-600 mb-3">We implement industry-standard security measures including:</p>
             <ul className="space-y-2 text-gray-600">
-              <li>Encryption of data in transit and at rest</li>
-              <li>Regular security audits and vulnerability assessments</li>
-              <li>Access controls and authentication requirements</li>
-              <li>Secure data centers with physical and network security</li>
+              <li>Access controls and authentication requirements for account-based products</li>
+              <li>Security practices appropriate to the product and the information it handles</li>
             </ul>
           </section>
 

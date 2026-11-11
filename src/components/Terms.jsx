@@ -7,7 +7,7 @@ const Terms = () => {
       <div className="py-16 md:py-20 border-b border-gray-200">
         <div className="container-max">
           <h1 className="mb-3">Terms of Use</h1>
-          <p className="text-gray-600">Our platform agreement</p>
+          <p className="text-gray-600">General terms for Workside services</p>
         </div>
       </div>
 
@@ -25,12 +25,11 @@ const Terms = () => {
           <section>
             <h2 className="mb-4">2. Description of Service</h2>
             <p className="text-gray-600 mb-4">
-              Workside Software provides a logistics management platform including:
+              Workside Software develops and operates software products and provides custom software development services. Product features and client project deliverables vary by engagement. When Workside provides access to a particular product or performs work under a separate written agreement, that agreement and any product-specific terms also apply.
             </p>
             <ul className="space-y-2 text-gray-600">
-              <li><strong>Web Host App:</strong> Administrative dashboard for managing operations and vendor selection</li>
-              <li><strong>Client Mobile App:</strong> Mobile application for submitting requests and tracking progress</li>
-              <li><strong>Supplier Mobile App:</strong> Mobile application for suppliers to receive and manage deliveries</li>
+              <li><strong>Software products:</strong> Product features are described in the applicable product materials and may change over time.</li>
+              <li><strong>Custom development:</strong> Project scope, delivery, fees, and ownership are governed by the applicable written agreement.</li>
             </ul>
           </section>
 
@@ -90,4 +89,4 @@ const Terms = () => {
   );
 };
 
-export default Terms; 
+export default Terms;

@@ -2,31 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { APP_INFO } from "../constants/appInfo";
 
-const Footer = () => {
-  return (
-    <footer className="bg-white border-t border-gray-200">
-      <div className="container-max section-spacing">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          {/* Brand */}
-          <div className="flex-shrink-0">
-            <p className="text-sm font-medium text-gray-600">Workside Software</p>
-          </div>
-          
-          {/* Navigation Links */}
-          <div className="flex flex-wrap gap-6">
-            <Link to="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy</Link>
-            <Link to="/terms" className="text-sm text-gray-600 hover:text-gray-900">Terms</Link>
-            <Link to="/support" className="text-sm text-gray-600 hover:text-gray-900">Support</Link>
-          </div>
-        </div>
-        
-        {/* Copyright */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
-          <p className="text-xs text-gray-500">© {APP_INFO.copyrightYear} Workside Software LLC. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
-export default Footer;
+export default function Footer() {
+  return <footer className="site-footer"><div className="container-max"><div className="footer-main"><Link to="/" className="brand-lockup footer-brand"><span className="brand-symbol">W<span>.</span></span><span>WORKSIDE <b>SOFTWARE</b></span></Link><p>Custom software for the way<br/>your business works.</p><div className="footer-links"><Link to="/services">Services</Link><Link to="/work">Our Work</Link><Link to="/about">About</Link><Link to="/contact">Contact</Link><Link to="/privacy">Privacy</Link><Link to="/terms">Terms</Link><Link to="/support">Product Support</Link></div></div><div className="footer-bottom"><span>© {APP_INFO.copyrightYear} Workside Software LLC</span><span>BAKERSFIELD, CALIFORNIA</span></div></div></footer>;
+}
