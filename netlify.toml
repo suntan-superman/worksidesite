@@ -2,8 +2,12 @@
   command = "CI=false yarn build"
   publish = "build"
 
+[functions]
+  directory = "netlify/functions"
+
 [build.environment]
   CI = "false"
+  NODE_VERSION = "22"
 
 # SPA redirects - handle client-side routing
 [[redirects]]

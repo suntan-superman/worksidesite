@@ -16,7 +16,7 @@ const Privacy = () => {
         <div className="space-y-12">
           <section>
             <h2 className="mb-4">About this website</h2>
-            <p className="text-gray-600">The project inquiry form on this website prepares an email in your email application. It does not submit information to a Workside web form. If you send the message, Workside receives the details you chose to include at the email address shown on the form.</p>
+            <p className="text-gray-600">When you submit a project inquiry, we store the name, email address, project details, and any optional company or phone information you provide so we can review the request and follow up. Inquiry records are stored in Workside Software’s Firestore project and are accessed through authorized Workside systems. The website does not write inquiry data directly from your browser to Firestore.</p>
           </section>
           <section>
             <h2 className="mb-4">1. Information We Collect</h2>
