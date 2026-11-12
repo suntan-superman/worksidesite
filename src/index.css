@@ -171,7 +171,8 @@ button, input, textarea { font: inherit; }
 .contact-form select:focus { border-color: #809a69; box-shadow: 0 0 0 3px #91ac6d22; }
 .contact-form input:disabled,.contact-form textarea:disabled,.contact-form select:disabled { background: #f3f5f2; color: #68746d; }
 .contact-form fieldset:disabled { opacity: .7; }
-.form-submit:disabled { cursor: wait; opacity: .8; }
+.form-submit:disabled { cursor: default; opacity: .8; }
+.form-submit.is-submitting { cursor: wait; }
 .form-note a { text-decoration: underline; }
 .form-error { color: #9b2c2c; background: #fff2ef; }
 .logistics-screenshots { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; align-items: start; }.logistics-screenshots figure { margin: 0; background: #f4f6f3; padding: 7px; border: 1px solid #e3e9e3; border-radius: 4px; }.logistics-screenshots figure:first-child { grid-column: 1 / -1; }.logistics-screenshots img { display: block; width: 100%; height: auto; border: 1px solid #dfe5df; }.logistics-screenshots figcaption { color: #66746b; font-size: 9px; padding: 6px 2px 1px; }
