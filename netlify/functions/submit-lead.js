@@ -181,6 +181,118 @@ function validate(value) {
   };
 }
 
+function emailProviderConfig() {
+  const requestedProvider = (process.env.WORKSIDE_EMAIL_PROVIDER || "").trim().toLowerCase();
+  const hasResendConfig = Boolean(process.env.RESEND_API_KEY || process.env.RESEND_FROM_EMAIL);
+  const hasSendGridConfig = Boolean(process.env.SENDGRID_API_KEY || process.env.SENDGRID_FROM_EMAIL);
+  const provider = requestedProvider || (hasResendConfig !== hasSendGridConfig ? (hasResendConfig ? "resend" : "sendgrid") : "");
+  if (!new Set(["resend", "sendgrid"]).has(provider)) return null;
+
+  const providerPrefix = provider === "resend" ? "RESEND" : "SENDGRID";
+  const apiKey = process.env.WORKSIDE_EMAIL_API_KEY || process.env[`${providerPrefix}_API_KEY`];
+  const from = process.env.WORKSIDE_EMAIL_FROM || process.env[`${providerPrefix}_FROM_EMAIL`];
+  if (!apiKey || !from || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(from)) return null;
+  return { provider, apiKey, from };
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  })[character]);
+}
+
+function notificationContent(lead, leadId, submittedAt) {
+  const projectTypes = {
+    "web-application": "Custom web application",
+    "mobile-app": "iOS or Android app",
+    "ai-automation": "AI or business automation",
+    "business-intelligence": "Business intelligence and analytics",
+    "saas-product": "SaaS product",
+    "seo-growth": "SEO and digital growth",
+    other: "Something else",
+  };
+  const timestamp = submittedAt instanceof Date && Number.isFinite(submittedAt.getTime())
+    ? submittedAt.toISOString()
+    : new Date().toISOString();
+  const fields = [
+    ["Contact name", lead.name],
+    ["Email", lead.email],
+    ...(lead.company ? [["Company", lead.company]] : []),
+    ...(lead.phone ? [["Phone", lead.phone]] : []),
+    ["Project type", projectTypes[lead.projectType] || lead.projectType],
+    ["Project description", lead.message],
+    ["Submission timestamp (UTC)", timestamp],
+    ["Firestore lead ID", leadId],
+  ];
+  const text = ["New Workside Software Project Inquiry", "", ...fields.map(([label, value]) => `${label}: ${value}`)].join("\n");
+  const rows = fields.map(([label, value]) => (
+    `<tr><th align="left" valign="top" style="padding:8px 12px 8px 0;color:#53635a">${escapeHtml(label)}</th>` +
+    `<td style="padding:8px 0;white-space:pre-wrap">${escapeHtml(value)}</td></tr>`
+  )).join("");
+  const html = `<!doctype html><html><body style="margin:0;background:#f4f6f3;font:15px/1.5 Arial,sans-serif;color:#173128"><main style="max-width:680px;margin:24px auto;padding:28px;background:#fff;border:1px solid #e1e7e1"><p style="margin:0 0 8px;color:#6b7a70;font-size:12px;letter-spacing:.08em;text-transform:uppercase">Workside Software</p><h1 style="margin:0 0 22px;font-size:24px;font-weight:600">New Workside Software Project Inquiry</h1><table style="width:100%;border-collapse:collapse">${rows}</table></main></body></html>`;
+  return { text, html };
+}
+
+async function sendLeadNotification(lead, leadId, submittedAt) {
+  const config = emailProviderConfig();
+  if (!config) {
+    console.error("[contact-lead] Email notification not sent: provider configuration missing or ambiguous");
+    return;
+  }
+
+  const content = notificationContent(lead, leadId, submittedAt);
+  const subject = "New Workside Software Project Inquiry";
+  let url;
+  let payload;
+  if (config.provider === "resend") {
+    url = "https://api.resend.com/emails";
+    payload = {
+      from: `Workside Software <${config.from}>`,
+      to: ["contact@worksidesoftware.com"],
+      subject,
+      ...content,
+    };
+  } else {
+    url = "https://api.sendgrid.com/v3/mail/send";
+    payload = {
+      personalizations: [{ to: [{ email: "contact@worksidesoftware.com" }] }],
+      from: { email: config.from, name: "Workside Software" },
+      subject,
+      content: [
+        { type: "text/plain", value: content.text },
+        { type: "text/html", value: content.html },
+      ],
+    };
+  }
+
+  try {
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${config.apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!result.ok) {
+      console.error("[contact-lead] Email notification provider rejected the message", {
+        provider: config.provider,
+        status: result.status,
+      });
+    }
+  } catch (error) {
+    console.error("[contact-lead] Email notification request failed", {
+      provider: config.provider,
+      reason: error.name === "TimeoutError" ? "timeout" : "network_error",
+    });
+  }
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== "POST") {
     return response(405, { error: "Method not allowed." }, { Allow: "POST" });
@@ -220,6 +332,14 @@ exports.handler = async (event) => {
       status: "new",
       createdAt: FieldValue.serverTimestamp(),
     });
+
+    try {
+      const savedLead = await leadRef.get();
+      const savedData = savedLead.data();
+      await sendLeadNotification(lead, leadRef.id, savedData?.createdAt?.toDate?.());
+    } catch (error) {
+      console.error("[contact-lead] Email notification preparation failed", typeof error.code === "string" || typeof error.code === "number" ? error.code : "unknown");
+    }
     return response(201, { ok: true });
   } catch (error) {
     if (error.code === 6 || error.code === "already-exists") return response(200, { ok: true, duplicate: true });
