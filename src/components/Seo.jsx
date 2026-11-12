@@ -4,10 +4,10 @@ import { projects } from "./portfolioData";
 
 const origin = "https://worksidesoftware.com";
 const pages = {
-  "/": ["Custom Software Development in Bakersfield, CA | Workside Software", "Workside Software builds custom web applications, mobile apps, AI-powered tools, and business software for companies in Bakersfield, Kern County, and beyond."],
+  "/": ["Custom Software Development | Workside Software", "Workside Software builds custom web applications, mobile apps, AI-powered tools, and business software for companies everywhere."],
   "/services": ["Custom Software Development Services | Workside Software", "Custom web applications, mobile apps, AI and automation, business intelligence, SaaS development, and digital growth services."],
   "/work": ["Our Work | Software Products and Client Projects | Workside", "Explore software products, published mobile apps, and client projects developed by Workside Software."],
-  "/about": ["About Workside Software | Bakersfield Software Development", "Meet Workside Software, a Bakersfield, California software company building practical applications and products for real business needs."],
+  "/about": ["About Workside Software | Custom Software Development", "Meet Workside Software, a California software company building practical applications and products for real business needs."],
   "/contact": ["Discuss Your Project | Workside Software", "Tell Workside Software about your custom software, web application, mobile app, or AI project."],
   "/privacy": ["Privacy Policy | Workside Software", "Read the Workside Software website and product privacy policy."],
   "/terms": ["Terms of Use | Workside Software", "Review the terms of use for Workside Software and its services."],
@@ -35,6 +35,10 @@ export default function Seo() {
     document.head.querySelector('meta[property="og:title"]').setAttribute("content", title);
     setMeta('meta[property="og:description"]', "property", "og:description");
     document.head.querySelector('meta[property="og:description"]').setAttribute("content", description);
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title");
+    document.head.querySelector('meta[name="twitter:title"]').setAttribute("content", title);
+    setMeta('meta[name="twitter:description"]', "name", "twitter:description");
+    document.head.querySelector('meta[name="twitter:description"]').setAttribute("content", description);
     setMeta('meta[property="og:type"]', "property", "og:type");
     document.head.querySelector('meta[property="og:type"]').setAttribute("content", "website");
     setMeta('meta[property="og:url"]', "property", "og:url");
