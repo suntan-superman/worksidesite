@@ -17,6 +17,7 @@ import FAQ from "./components/FAQ";
 import Terms from "./components/Terms";
 import { Portfolio, ProjectDetail } from "./components/Portfolio";
 import Seo from "./components/Seo";
+import AdminContent from "./components/AdminContent";
 
 
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/products" element={<Navigate to="/work/workside-logistics" replace />} />
           <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<ContactWorkside />} />
+          <Route path="/admin/content" element={<AdminContent />} />
           <Route path="/about" element={<About />} />
           <Route path="/policies" element={<Policies />} />
           <Route path="/smstextoptinform" element={<SMSTextOptInForm />} />

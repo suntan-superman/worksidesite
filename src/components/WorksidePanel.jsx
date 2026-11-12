@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { usePublishedContent } from "./usePublishedContent";
 
 const capabilities = [
   ["01", "Web applications", "Purpose-built platforms that bring your workflows, data, and people together."],
@@ -7,7 +8,10 @@ const capabilities = [
   ["03", "AI and automation", "Practical AI tools and automations that reduce manual steps and improve response."],
 ];
 
-const Home = () => (
+const Home = () => {
+  const { projects, testimonials } = usePublishedContent();
+  const featured = projects.filter((project) => ["sageset", "merxus-ai", "workside-logistics"].includes(project.slug)).slice(0, 3);
+  return (
   <div>
     <section className="hero-section">
       <div className="container-max hero-grid">
@@ -35,9 +39,11 @@ const Home = () => (
     <section className="section-pad"><div className="container-max"><div className="section-heading"><div><p className="eyebrow eyebrow-dark">WHAT WE BUILD</p><h2>Good software starts<br/>with understanding the work.</h2></div><p className="section-aside">Every business has its own people, systems, and constraints. We get to know yours, then build technology that makes the next step easier.</p></div>
       <div className="capability-grid">{capabilities.map(([number, title, text])=><article className="capability" key={title}><span className="cap-number">{number}</span><h3>{title}</h3><p>{text}</p><Link to="/services" aria-label={`Explore ${title}`}>Explore service <span>↗</span></Link></article>)}</div>
     </div></section>
-    <section className="work-preview"><div className="container-max"><div className="work-preview-top"><div><p className="eyebrow eyebrow-dark">SELECTED WORK</p><h2>A range of ideas.<br/>Made real in software.</h2></div><Link to="/work" className="text-link">See all projects <span>↗</span></Link></div><div className="preview-projects"><Link to="/work/sageset" className="preview-card preview-sage"><span className="project-type">PUBLISHED IOS APP</span><div className="preview-mark sage-mark">s.</div><div><strong>SageSet</strong><p>Fitness planning and camera-based exercise experiences.</p></div><span className="preview-arrow">↗</span></Link><Link to="/work/merxus-ai" className="preview-card preview-merxus"><span className="project-type">LIVE AI PRODUCT</span><div className="preview-mark merxus-mark">m.</div><div><strong>Merxus AI</strong><p>AI-powered call handling and business communications.</p></div><span className="preview-arrow">↗</span></Link><Link to="/work/workside-logistics" className="preview-card preview-logistics"><span className="project-type">WORKSIDE PRODUCT</span><div className="preview-mark logistics-mark">W/</div><div><strong>Workside Logistics</strong><p>Operational software for coordinating logistics workflows.</p></div><span className="preview-arrow">↗</span></Link></div></div></section>
+    {featured.length > 0 && <section className="work-preview"><div className="container-max"><div className="work-preview-top"><div><p className="eyebrow eyebrow-dark">SELECTED WORK</p><h2>A range of ideas.<br/>Made real in software.</h2></div><Link to="/work" className="text-link">See all projects <span>↗</span></Link></div><div className="preview-projects">{featured.map((project) => <Link to={`/work/${project.slug}`} className={`preview-card preview-${project.className || "custom"}`} key={project.slug}><span className="project-type">{project.type}</span>{project.imageUrl ? <img className="preview-mark preview-image" src={project.imageUrl} alt="" loading="lazy" /> : <div className={`preview-mark ${project.className || "custom"}-mark`}>{project.mark || project.name.slice(0, 1)}</div>}<div><strong>{project.name}</strong><p>{project.description}</p></div><span className="preview-arrow">↗</span></Link>)}</div></div></section>}
+    {testimonials.length > 0 && <section className="section-pad"><div className="container-max"><div className="section-heading"><div><p className="eyebrow eyebrow-dark">CUSTOMER NOTES</p><h2>Good work, said by the people<br/>who know it best.</h2></div></div><div className="testimonial-grid">{testimonials.map((item) => <figure className="testimonial-card" key={item.id}><blockquote>“{item.quote}”</blockquote><figcaption>{item.imageUrl && <img src={item.imageUrl} alt="" loading="lazy" />}<span><strong>{item.name}</strong>{item.attribution && <small>{item.attribution}</small>}</span></figcaption></figure>)}</div></div></section>}
     <section className="home-cta"><div className="container-max home-cta-inner"><div><p className="eyebrow">HAVE A PROJECT IN MIND?</p><h2>Let’s make the work<br/>work better.</h2></div><Link to="/contact" className="button button-lime">Discuss Your Project <span aria-hidden="true">↗</span></Link></div></section>
   </div>
-);
+  );
+};
 
 export default Home;

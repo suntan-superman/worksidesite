@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+## Workside content administration
+
+The unlinked `/admin/content` page uses a signed, HTTP-only server session. Configure `WORKSIDE_CONTENT_ADMIN_PASSWORD` (at least 16 characters) and a random `WORKSIDE_CONTENT_SESSION_SECRET` of at least 32 characters in the production Netlify environment. Firebase Admin access continues to use the existing server-side `FIREBASE_SERVICE_ACCOUNT_JSON`; no Firebase credentials are added to browser code and Firestore rules remain unchanged. Portfolio image links must use HTTPS.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

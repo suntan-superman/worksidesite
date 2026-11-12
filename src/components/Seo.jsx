@@ -9,6 +9,7 @@ const pages = {
   "/work": ["Our Work | Software Products and Client Projects | Workside", "Explore software products, published mobile apps, and client projects developed by Workside Software."],
   "/about": ["About Workside Software | Custom Software Development", "Meet Workside Software, a California software company building practical applications and products for real business needs."],
   "/contact": ["Discuss Your Project | Workside Software", "Tell Workside Software about your custom software, web application, mobile app, or AI project."],
+  "/admin/content": ["Content Administration | Workside Software", "Authorized Workside Software content administration."],
   "/privacy": ["Privacy Policy | Workside Software", "Read the Workside Software website and product privacy policy."],
   "/terms": ["Terms of Use | Workside Software", "Review the terms of use for Workside Software and its services."],
   "/support": ["Product Support | Workside Software", "Get help with Workside Software products and services."],
@@ -24,6 +25,9 @@ export default function Seo() {
       ? [`${project.name} | Workside Software`, `${project.description} Explore this Workside Software ${project.type.toLowerCase()}.`]
       : (pages[pathname] || fallback);
     document.title = title;
+    let robots = document.head.querySelector('meta[name="robots"]');
+    if (!robots) { robots = document.createElement("meta"); robots.name = "robots"; document.head.appendChild(robots); }
+    robots.content = pathname === "/admin/content" ? "noindex, nofollow" : "index, follow";
     const setMeta = (selector, attribute, value) => {
       let element = document.head.querySelector(selector);
       if (!element) { element = document.createElement("meta"); document.head.appendChild(element); }
