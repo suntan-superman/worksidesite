@@ -16,7 +16,7 @@
 
 [[redirects]]
   from = "/work/:slug"
-  to = "/.netlify/functions/project-page?slug=:slug"
+  to = "/.netlify/functions/project-page/:slug"
   status = 200
   force = true
 

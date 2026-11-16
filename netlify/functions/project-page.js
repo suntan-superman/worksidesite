@@ -71,7 +71,8 @@ function notFound() {
 
 exports.handler = async (event) => {
   if (event.httpMethod !== "GET") return { statusCode: 405, headers: { Allow: "GET", "Cache-Control": "no-store" }, body: "Method not allowed" };
-  const slug = String(event.queryStringParameters?.slug || "");
+  const routeSlug = String(event.path || "").split("/").filter(Boolean).pop();
+  const slug = String(event.queryStringParameters?.slug || (routeSlug === "project-page" ? "" : routeSlug) || "");
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return { statusCode: 404, headers: { "Content-Type": "text/html; charset=utf-8", "X-Robots-Tag": "noindex" }, body: notFound() };
   try {
     const defaultsPath = fileAt("netlify/shared/portfolio-defaults.json");
