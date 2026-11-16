@@ -87,7 +87,7 @@ exports.handler = async (event) => {
     if (saved && saved.status !== "published") return { statusCode: 404, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" }, body: notFound() };
     const project = saved ? { ...(base || {}), ...saved } : base;
     if (!project || project.status === "archived") return { statusCode: 404, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" }, body: notFound() };
-    return { statusCode: 200, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", ...(project.indexable === false ? { "X-Robots-Tag": "noindex, nofollow" } : {}) }, body: pageMarkup(project, fs.readFileSync(templatePath, "utf8")) };
+    return { statusCode: 200, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=60", "X-Content-Type-Options": "nosniff", ...(project.indexable === false ? { "X-Robots-Tag": "noindex, nofollow" } : {}) }, body: pageMarkup(project, fs.readFileSync(templatePath, "utf8")) };
   } catch (error) {
     console.error("[project-page] render failed", error?.code || "unknown");
     return { statusCode: 503, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex" }, body: "<!doctype html><html><head><title>Project page temporarily unavailable</title></head><body><h1>Project page temporarily unavailable</h1></body></html>" };
