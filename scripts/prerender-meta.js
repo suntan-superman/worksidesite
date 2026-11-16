@@ -16,13 +16,18 @@ const pages = new Function(`return ${pagesSrc}`)();
 const routes = { ...pages };
 projects.forEach((p) => {
   routes[`/work/${p.slug}`] = [
-    `${p.name} | Workside Software`,
-    `${p.description} Explore this Workside Software ${p.type.toLowerCase()}.`,
+    p.caseStudy?.seoTitle || `${p.name} | Workside Software`,
+    p.caseStudy?.seoDescription || `${p.description} Explore this Workside Software ${p.type.toLowerCase()}.`,
   ];
 });
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const list = (items) => `<ul>${items.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>`;
+const caseStudyMarkup = (p) => {
+  if (!p.caseStudy) return "";
+  const section = (number, title, content) => `<section><span>${number}</span><h2>${title}</h2>${content}</section>`;
+  return `<div class="static-case-study">${section("01", "The business problem", `<p>${esc(p.caseStudy.problem)}</p>`)}${section("02", "The solution", `<p>${esc(p.caseStudy.solution)}</p>`)}${section("03", "Key features", list(p.caseStudy.features || []))}${section("04", "Technical capabilities demonstrated", list(p.caseStudy.technical || []))}${section("05", "Project status", `<p>${esc(p.statusNote || p.type)}</p>`)}</div>`;
+};
 
 const services = [
   ["Custom Web Applications", "Business software designed around your processes, with considered interfaces and reliable back-end systems.", ["Customer and operations portals", "Workflow and case management", "Integrations with your existing tools"]],
@@ -45,7 +50,9 @@ const bodies = {
   "/contact": ["Tell us what", `<h1>Discuss your project</h1><p>Share a little about the challenge, the idea, or the process you would like to improve. Project types: custom web application, iOS or Android app, AI or business automation, business intelligence and analytics, SaaS product, SEO and digital growth.</p><p>Email: <a href="mailto:contact@worksidesoftware.com">contact@worksidesoftware.com</a></p>`],
 };
 projects.forEach((p) => {
-  bodies[`/work/${p.slug}`] = [null, `<h1>${esc(p.name)}</h1><p>${esc(p.type)} · ${esc(p.category)}</p><p>${esc(p.description)}</p><p>${esc(p.detail)}</p>${p.link ? `<p><a href="${esc(p.link)}" rel="noopener">${esc(p.linkLabel)}</a></p>` : ""}<p><a href="/work">All work</a> <a href="/contact">Discuss your project</a></p>`];
+  const visual = p.imageUrl ? `<figure><img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt || `${p.name} project image`)}" loading="lazy">${p.imageCaption ? `<figcaption>${esc(p.imageCaption)}</figcaption>` : ""}</figure>` : "";
+  const publicLink = p.link ? `<p><a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">${esc(p.linkLabel || "Visit project")}</a></p>` : "";
+  bodies[`/work/${p.slug}`] = [null, `<article><h1>${esc(p.name)}</h1><p>${esc(p.type)} · ${esc(p.category)}</p><p>${esc(p.description)}</p><p>${esc(p.detail)}</p>${visual}${publicLink}${caseStudyMarkup(p)}<p><a href="/contact">Discuss Your Project</a> · <a href="/work">All work</a></p></article>`];
 });
 ["/privacy", "/terms", "/support"].forEach((r) => {
   bodies[r] = [null, `<h1>${esc(routes[r][0].replace(/ \| Workside Software$/, ""))}</h1><p>${esc(routes[r][1])}</p>`];

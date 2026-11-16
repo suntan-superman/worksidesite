@@ -22,7 +22,7 @@ export default function Seo() {
     const project = projectMatch && projects.find((item) => item.slug === projectMatch.params.slug);
     const fallback = ["Workside Software | Custom Business Software", "Workside Software builds custom applications and software products for business."];
     const [title, description] = project
-      ? [`${project.name} | Workside Software`, `${project.description} Explore this Workside Software ${project.type.toLowerCase()}.`]
+      ? [project.caseStudy?.seoTitle || `${project.name} | Workside Software`, project.caseStudy?.seoDescription || `${project.description} Explore this Workside Software ${project.type.toLowerCase()}.`]
       : (pages[pathname] || fallback);
     document.title = title;
     let robots = document.head.querySelector('meta[name="robots"]');
