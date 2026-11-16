@@ -5,6 +5,21 @@
 [functions]
   directory = "netlify/functions"
 
+[functions."project-page"]
+  included_files = ["build/index.html", "netlify/shared/portfolio-defaults.json"]
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/portfolio-sitemap"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/work/:slug"
+  to = "/.netlify/functions/project-page?slug=:slug"
+  status = 200
+  force = true
+
 [build.environment]
   CI = "false"
   NODE_VERSION = "22"

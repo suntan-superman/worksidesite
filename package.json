@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && node scripts/prerender-meta.js",
+    "build": "node scripts/export-portfolio-defaults.js && react-scripts build && node scripts/prerender-meta.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

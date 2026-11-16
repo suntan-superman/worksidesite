@@ -71,7 +71,7 @@ const schemaFor = (route) => JSON.stringify([organization, ...(route === "/servi
 
 const template = fs.readFileSync(path.join(buildDir, "index.html"), "utf8");
 const staticRoutes = Object.keys(bodies);
-const guard = `<script>(function(){var p=location.pathname.replace(/\\/+$/,"")||"/";if(${JSON.stringify(staticRoutes)}.indexOf(p)<0){var r=document.getElementById("root");if(r)r.innerHTML=""}})()</script>`;
+const guard = `<script>(function(){var p=location.pathname.replace(/\\/+$/,"")||"/";var portfolio=p.indexOf("/work/")===0&&p.slice(6).indexOf("/")<0;if(!portfolio&&${JSON.stringify(staticRoutes)}.indexOf(p)<0){var r=document.getElementById("root");if(r)r.innerHTML=""}})()</script>`;
 
 Object.entries(routes).forEach(([route, [title, description]]) => {
   const url = route === "/" ? `${origin}/` : `${origin}${route}`;

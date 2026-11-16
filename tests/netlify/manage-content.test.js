@@ -2,6 +2,10 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { __test } = require("../../netlify/functions/manage-content");
 const { handler } = require("../../netlify/functions/manage-content");
+const fs = require("node:fs");
+const path = require("node:path");
+
+function defaultProjects() { return JSON.parse(fs.readFileSync(path.join(__dirname, "../../netlify/shared/portfolio-defaults.json"), "utf8")); }
 
 test("project content validation accepts bounded published records", () => {
   const result = __test.validateContent({ kind: "project", slug: "sample-project", name: "Sample", type: "Project", category: "Web", description: "A short description", detail: "Details", mark: "S", link: "https://example.com", linkLabel: "Visit", status: "published", imageUrl: "https://example.com/image.png" });
@@ -19,6 +23,37 @@ test("invalid or unsafe content links are rejected", () => {
 test("testimonial validation requires a name and quote", () => {
   const result = __test.validateContent({ kind: "testimonial", quote: "", name: "", status: "draft" });
   assert.match(result.error, /missing/);
+});
+
+test("draft projects can be saved before optional case-study and SEO fields are complete", () => {
+  const result = __test.validateContent({ kind: "project", slug: "future-project", name: "Future Project", status: "draft" });
+  assert.equal(result.data.status, "draft");
+  assert.equal(result.data.description, "");
+  assert.equal(result.data.indexable, true);
+});
+
+test("published projects require a short public description", () => {
+  const result = __test.validateContent({ kind: "project", slug: "future-project", name: "Future Project", status: "published" });
+  assert.match(result.error, /short description/);
+});
+
+test("all migrated built-in project entries pass server-side validation without losing local image paths", () => {
+  for (const source of defaultProjects()) {
+    const result = __test.validateContent({ ...source, kind: "project", status: "published" });
+    assert.ok(result.data, `${source.slug}: ${result.error}`);
+    assert.equal(result.data.caseStudy.problem, source.caseStudy.problem);
+    assert.deepEqual(result.data.caseStudy.features, source.caseStudy.features);
+    assert.equal(result.data.imageUrl, source.imageUrl || "");
+  }
+});
+
+test("project links, visibility, and indexing fields are bounded and validated", () => {
+  const valid = __test.validateContent({ kind: "project", slug: "managed-project", name: "Managed", type: "Product", category: "Web", description: "Managed project", link: "https://example.com", linkLabel: "Visit site", status: "published", featured: true, displayOrder: 3, indexable: false, canonicalUrl: "https://worksidesoftware.com/work/managed-project", keyFeatures: ["Fast"], gallery: [{ url: "https://example.com/shot.webp", caption: "Home", altText: "Home screen", order: 0 }] });
+  assert.equal(valid.data.featured, true);
+  assert.equal(valid.data.indexable, false);
+  assert.equal(valid.data.gallery[0].altText, "Home screen");
+  const invalidCanonical = __test.validateContent({ kind: "project", slug: "managed-project", name: "Managed", type: "Product", category: "Web", description: "Managed project", status: "draft", canonicalUrl: "https://example.com/elsewhere" });
+  assert.match(invalidCanonical.error, /Canonical URL/);
 });
 
 test("admin session rejects missing, expired, and malformed cookies", () => {

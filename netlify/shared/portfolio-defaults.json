@@ -1,0 +1,296 @@
+[
+  {
+    "slug": "route-logistics",
+    "name": "Route Logistics",
+    "type": "Production web release",
+    "category": "Field service · Web and mobile",
+    "description": "Connected dispatch and field-work software for service businesses, with owner and manager workflows on the web and assigned work for technicians on mobile.",
+    "detail": "Route Logistics brings company operations and technician field work into one role-aware workflow. Dispatchers can schedule and assign work, while field staff receive job instructions, record visit details, and keep supported work queued through connectivity interruptions.",
+    "statusNote": "Web release published November 15, 2026. The corresponding iOS and Android source is implemented; that release did not publish a new native store build.",
+    "mark": "RL",
+    "className": "route",
+    "imageUrl": "",
+    "caseStudy": {
+      "problem": "Field-service teams need dispatch, customer and job records, and technician updates to stay in step. Separate screens and delayed updates make it harder to see what has been assigned and what happened in the field.",
+      "solution": "We developed a connected web operations app and a companion mobile field app, with company roles and job assignments controlling what each person can see and do.",
+      "features": [
+        "Schedule jobs while checking staff eligibility, availability, and calendar conflicts.",
+        "Support recurring appointments and retain a history of scheduling changes.",
+        "Give technicians read-only job instructions and tools to record work, photos, checklists, and visit evidence.",
+        "Let eligible owners and managers switch between management and their own assigned field work.",
+        "Queue supported field updates for retry when a connection is unavailable."
+      ],
+      "technical": [
+        "React web operations interface and Expo-based iOS/Android application.",
+        "Firebase Authentication, Firestore, and Storage with company-scoped access checks.",
+        "Role-aware workflows, server-checked assignments, and retry-safe field updates."
+      ],
+      "seoTitle": "Route Logistics Field Service Software | Workside Software",
+      "seoDescription": "A production web release for field-service dispatch, technician work, recurring schedules, and role-aware operations, with mobile source awaiting its next store release."
+    }
+  },
+  {
+    "slug": "sageset",
+    "name": "SageSet",
+    "type": "Published iOS app",
+    "category": "Mobile · Fitness",
+    "description": "An iPhone fitness app for personalized workout planning, progress tracking, and guided exercise challenges.",
+    "detail": "SageSet combines editable workout plans with a day-to-day training log. The current App Store listing includes AI-assisted plans and an AR squat challenge, alongside calendar progress and nutrition tools.",
+    "mark": "s.",
+    "className": "sage",
+    "imageUrl": "/projects/sageset-challenges.webp",
+    "imageAlt": "SageSet iPhone app challenge list showing two squat challenges",
+    "imagePresentation": "portrait",
+    "link": "https://apps.apple.com/us/app/sageset/id6757274599",
+    "linkLabel": "View SageSet on the App Store",
+    "caseStudy": {
+      "problem": "People need workout plans that fit their goals and schedule, plus a straightforward way to see what they have completed and keep adjusting the plan.",
+      "solution": "We built an iPhone training app that lets people create or generate editable plans, follow daily workouts, and track progress over time.",
+      "features": [
+        "Personalized workout plans with optional AI-assisted generation.",
+        "Daily exercise details with sets, repetitions, and completion tracking.",
+        "Calendar-based workout history and nutrition tools.",
+        "AR-assisted squat repetition tracking and guided challenges in the published app."
+      ],
+      "technical": [
+        "iPhone product design and release workflow for a consumer fitness app.",
+        "Camera-based movement tracking for the published squat challenge.",
+        "User-editable planning flows that keep generated suggestions reviewable."
+      ],
+      "seoTitle": "SageSet Fitness App Case Study | Workside Software",
+      "seoDescription": "Workside built SageSet, a published iPhone fitness app for personalized workout plans, progress tracking, AR squat challenges, and nutrition tools."
+    }
+  },
+  {
+    "slug": "merxus-ai",
+    "name": "Merxus AI",
+    "type": "Live product",
+    "category": "AI · Communications",
+    "description": "AI-powered call answering and business communication workflows for capturing customer requests and helping teams follow up.",
+    "detail": "Merxus AI handles inbound calls, captures customer intent and contact details, supports appointment requests, and sends service-related voice and SMS notifications where recipients have opted in.",
+    "mark": "m.",
+    "className": "merxus",
+    "imageUrl": "/projects/merxus-ai-cover.webp",
+    "imageAlt": "Merxus AI public product artwork with the Merxus AI Assistant name",
+    "imagePresentation": "cover",
+    "link": "https://merxus.ai/",
+    "linkLabel": "Explore Merxus AI",
+    "caseStudy": {
+      "problem": "Small teams can miss customer calls or lose the details needed to return them, schedule a next step, and keep service communication organized.",
+      "solution": "We developed a business communications product that answers inbound calls, captures the caller's request, and supports follow-up through configured voice and consent-based SMS workflows.",
+      "features": [
+        "Inbound call answering and customer-intent capture.",
+        "Appointment requests and customer details routed into business workflows.",
+        "Service notifications such as confirmations and missed-call follow-ups, subject to consent and configuration.",
+        "Business-focused controls for opt-in messaging and customer communication."
+      ],
+      "technical": [
+        "AI-assisted voice workflows connected to structured customer-request handling.",
+        "Voice and SMS integration paths with consent-aware notification behavior.",
+        "A public product site that explains scope, use cases, and messaging disclosures."
+      ],
+      "seoTitle": "Merxus AI Call Answering Case Study | Workside Software",
+      "seoDescription": "See how Workside developed Merxus AI for inbound call answering, customer request capture, appointment workflows, and consent-based service notifications."
+    }
+  },
+  {
+    "slug": "radiusiq",
+    "name": "RadiusIQ",
+    "type": "Development-stage product",
+    "category": "Intelligence · Local business",
+    "description": "A restaurant-focused product for reviewing changes and signals published on supported local competitor websites.",
+    "detail": "RadiusIQ is in active development. Its current product direction centers on public website observations for restaurants, bars, and hospitality operators, with evidence to review before acting. Coverage and scan timing depend on supported sources and configuration.",
+    "mark": "R",
+    "className": "radius",
+    "imageUrl": "/projects/radiusiq-cover.webp",
+    "imageAlt": "RadiusIQ public product artwork about monitoring competitor changes",
+    "imagePresentation": "cover",
+    "link": "https://radiusiq.ai/",
+    "linkLabel": "Explore RadiusIQ",
+    "caseStudy": {
+      "problem": "Restaurant operators can spend time checking competitor sites for menu, promotion, event, or hours changes, while missing context or struggling to keep notes consistent.",
+      "solution": "We are developing a restaurant intelligence workflow that organizes supported public website observations into reviewable signals instead of treating every change as a recommendation.",
+      "features": [
+        "Competitor watchlists for local restaurants and hospitality businesses.",
+        "Detection of changes on supported public websites.",
+        "Reviewable public menu, event, and promotion observations where the source supports them.",
+        "Evidence and context for an operator to verify before responding."
+      ],
+      "technical": [
+        "Web-first SaaS product architecture with separate web, API, and worker responsibilities.",
+        "Public-source collection and normalization into observations that can be reviewed.",
+        "Source-dependent coverage and scan cadence, with manual checks retained for gaps."
+      ],
+      "seoTitle": "RadiusIQ Restaurant Intelligence Case Study | Workside Software",
+      "seoDescription": "Workside is developing RadiusIQ, a restaurant-focused product for reviewing supported public competitor website changes with source evidence."
+    }
+  },
+  {
+    "slug": "property-intelligence",
+    "name": "Property Intelligence",
+    "type": "Private-beta foundation",
+    "category": "Web app · Real estate analysis",
+    "description": "An authenticated research and investment-analysis workspace that keeps property evidence and deal scenarios organized.",
+    "detail": "Property Intelligence is a private-beta product foundation. It organizes source-dated research, saved property workspaces, versioned investment scenarios, underwriting, and investor reporting behind authenticated, organization-scoped access.",
+    "mark": "PI",
+    "className": "property",
+    "caseStudy": {
+      "problem": "Real estate analysis can become difficult to audit when source evidence, assumptions, scenario revisions, and investor materials are scattered across separate files and tools.",
+      "solution": "We built an authenticated workspace that keeps research evidence tied to saved properties and versioned scenarios, so analysts can revisit the inputs behind an analysis.",
+      "features": [
+        "Source-dated property research and comparable-sale evidence.",
+        "Organization-owned property workspaces and immutable scenario revisions.",
+        "Deterministic underwriting and Monte Carlo analysis.",
+        "Investor preferences, deal matching, and controlled report packages tied to a saved scenario."
+      ],
+      "technical": [
+        "Authenticated, organization-scoped web application and server-side API.",
+        "Private document storage and authorization checks on report delivery.",
+        "Versioned inputs and reproducible financial analysis workflows."
+      ],
+      "seoTitle": "Property Intelligence Analysis Platform | Workside Software",
+      "seoDescription": "A private-beta property research and investment-analysis workspace with source-dated evidence, versioned scenarios, underwriting, and investor reporting."
+    }
+  },
+  {
+    "slug": "galageaux-arcade",
+    "name": "Galageaux Arcade",
+    "type": "Published iOS game",
+    "category": "Mobile · Games",
+    "description": "An iPhone arcade space-combat game with staged encounters, power-ups, and player progression.",
+    "detail": "Galageaux Arcade brings an arcade-style space-combat loop to iPhone, with escalating stages, enemy attacks, boss encounters, power-ups, and player progression.",
+    "mark": "G",
+    "className": "galageaux",
+    "imageUrl": "/projects/galageaux-gameplay.webp",
+    "imageAlt": "Galageaux Arcade iPhone gameplay screenshot showing enemy formations and player ship",
+    "imagePresentation": "portrait",
+    "link": "https://apps.apple.com/ca/app/galageaux-arcade/id6817621098",
+    "linkLabel": "View Galageaux Arcade on the App Store",
+    "caseStudy": {
+      "problem": "A mobile arcade game needs short, readable play sessions that still reward players for learning enemy patterns and returning to improve their runs.",
+      "solution": "We developed an iPhone space-combat game with escalating encounters, selectable controls, and in-game progression.",
+      "features": [
+        "Multiple stages with distinct enemy attacks and boss encounters.",
+        "Power-ups that change the player's available attack patterns.",
+        "Touch or tilt controls, plus an interactive guide to core actions.",
+        "In-game statistics and achievements for tracking progress."
+      ],
+      "technical": [
+        "Mobile game input and screen-layout work for iPhone.",
+        "Gameplay progression, encounter state, and player-stat tracking.",
+        "App Store packaging and release for a standalone game product."
+      ],
+      "seoTitle": "Galageaux Arcade iPhone Game Case Study | Workside Software",
+      "seoDescription": "Workside developed Galageaux Arcade, a published iPhone space-combat game with staged encounters, power-ups, and player progression."
+    }
+  },
+  {
+    "slug": "workside-signals",
+    "name": "Workside Signals",
+    "type": "Internal product",
+    "category": "Operational intelligence",
+    "description": "An internal Workside product exploring how operational signals can be organized for review and action.",
+    "detail": "Workside Signals remains an internal product. This public case study describes the product direction without exposing its internal dashboards, data sources, or access routes.",
+    "mark": "↗",
+    "className": "signals",
+    "caseStudy": {
+      "problem": "Operational information is often spread across systems, which makes it harder for teams to spot a meaningful change and decide who should review it.",
+      "solution": "Workside Signals is an internal product effort exploring a focused way to collect and present operational signals for human review.",
+      "features": [
+        "Exploration of operational signal organization and review flows.",
+        "Internal product work spanning data presentation and workflow design.",
+        "No public product access or customer-facing capability is claimed here."
+      ],
+      "technical": [
+        "Internal product architecture and operational data presentation.",
+        "Workflow exploration that keeps review and follow-up visible."
+      ],
+      "seoTitle": "Workside Signals Internal Product Case Study | Workside Software",
+      "seoDescription": "Workside Signals is an internal product effort exploring operational signal organization and review workflows; no public product access is offered."
+    }
+  },
+  {
+    "slug": "cutpro-tree-service",
+    "name": "CUTPRO Tree Service",
+    "type": "Client engagement",
+    "category": "Web · Lead management",
+    "description": "A tree-service website and lead workflow that helps prospective customers understand services and request an estimate.",
+    "detail": "Workside developed a public service website and a protected lead-management workflow for CUTPRO Tree Service. Customer estimate photos remain private and are handled separately from public gallery content.",
+    "mark": "C",
+    "className": "cutpro",
+    "caseStudy": {
+      "problem": "A local service business needs clear service information and a dependable way to receive, review, and follow up on estimate requests without exposing private customer details.",
+      "solution": "We developed a responsive service website connected to an authenticated lead workflow and separate handling for private estimate photos.",
+      "features": [
+        "Service pages for tree work and related property services.",
+        "Estimate-request intake with protected staff review.",
+        "Private customer photo uploads separated from the public gallery.",
+        "Editable company information and public-facing service content."
+      ],
+      "technical": [
+        "Responsive Next.js website and public service content.",
+        "Supabase-backed administrator access and protected lead handling.",
+        "Private upload flow with verification before selected media enters a public gallery."
+      ],
+      "seoTitle": "CUTPRO Tree Service Website Case Study | Workside Software",
+      "seoDescription": "Workside built a responsive tree-service website and protected estimate lead workflow for CUTPRO, including separate private photo handling."
+    }
+  },
+  {
+    "slug": "sellmykernhome",
+    "name": "SellMyKernHome",
+    "type": "Client engagement",
+    "category": "Web · Real estate",
+    "description": "A Kern County home-seller website focused on a local, straightforward path to share property details and request follow-up.",
+    "detail": "Workside developed SellMyKernHome as a local seller inquiry experience, with location-specific information, structured lead capture, and an owner-facing workflow for handling inquiries.",
+    "mark": "K",
+    "className": "kern",
+    "link": "https://sellmykernhome.com/",
+    "linkLabel": "Visit SellMyKernHome",
+    "caseStudy": {
+      "problem": "Homeowners need a clear local starting point for asking about a sale, without having to navigate a generic national property funnel.",
+      "solution": "We created a Kern County-focused website that pairs location-specific guidance with a structured seller inquiry path.",
+      "features": [
+        "Local seller information and clear next steps.",
+        "Structured property inquiry form with follow-up details.",
+        "Search-focused location pages and crawlable site metadata.",
+        "Owner-facing lead handling with private server-side integrations."
+      ],
+      "technical": [
+        "Next.js website with server-rendered public pages and SEO metadata.",
+        "Server-side lead submission and protected integration credentials.",
+        "Independent public content and owner-facing lead workflows."
+      ],
+      "seoTitle": "SellMyKernHome Website Case Study | Workside Software",
+      "seoDescription": "Workside developed a Kern County seller inquiry website with local information, structured lead capture, and server-side lead handling."
+    }
+  },
+  {
+    "slug": "workside-logistics",
+    "name": "Workside Logistics",
+    "type": "Workside product · access not public",
+    "category": "Web · Operations",
+    "description": "A logistics coordination product for organizing operational requests, vendors, and movement tracking across web and mobile workflows.",
+    "detail": "Workside Logistics explores request intake, coordination, and status visibility across web and mobile workflows. No public product access URL is listed for this project.",
+    "statusNote": "Workside product case study; no public application URL is available.",
+    "mark": "W/",
+    "className": "logistics",
+    "caseStudy": {
+      "problem": "Operational requests can move through several people and vendors, making ownership, status, and the latest update difficult to follow across separate tools.",
+      "solution": "We developed web and mobile workflows that organize requests, coordination, and tracking around a shared operational process.",
+      "features": [
+        "Operational request intake and status review.",
+        "Coordination views for vendors and destinations.",
+        "Map-based movement and tracking workflows.",
+        "Role-specific web and mobile experiences."
+      ],
+      "technical": [
+        "Web and mobile workflow design for operations teams.",
+        "Map-based status visualization and shared request records.",
+        "Separate role-oriented views for coordination and field updates."
+      ],
+      "seoTitle": "Workside Logistics Operations Software | Workside Software",
+      "seoDescription": "A Workside logistics product case study covering request coordination, vendor workflows, map-based tracking, and web/mobile operations."
+    }
+  }
+]

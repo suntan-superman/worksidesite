@@ -10,7 +10,7 @@ const capabilities = [
 
 const Home = () => {
   const { projects, testimonials } = usePublishedContent();
-  const featured = projects.filter((project) => ["route-logistics", "sageset", "merxus-ai"].includes(project.slug)).slice(0, 3);
+  const featured = projects.filter((project) => project.featured ?? ["route-logistics", "sageset", "merxus-ai"].includes(project.slug)).slice(0, 3);
   return (
   <div>
     <section className="hero-section">

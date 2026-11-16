@@ -15,7 +15,9 @@ export function usePublishedContent() {
           return row ? (row.status === "published" ? { ...base, ...row } : null) : base;
         }).filter(Boolean);
         const additions = overrides.filter((row) => row.status === "published" && !defaultProjects.some((base) => base.slug === row.slug));
-        setContent({ projects: [...merged, ...additions], testimonials: Array.isArray(data.testimonials) ? data.testimonials.filter((row) => row.status === "published") : [], loaded: true });
+        const visibleProjects = [...merged, ...additions].filter((row) => row.status !== "archived");
+        visibleProjects.sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || (a.displayOrder ?? 1000) - (b.displayOrder ?? 1000));
+        setContent({ projects: visibleProjects, testimonials: Array.isArray(data.testimonials) ? data.testimonials.filter((row) => row.status === "published") : [], loaded: true });
       })
       .catch(() => { if (active) setContent({ projects: defaultProjects, testimonials: [], loaded: true }); });
     return () => { active = false; };

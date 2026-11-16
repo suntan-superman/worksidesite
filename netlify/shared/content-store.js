@@ -3,6 +3,14 @@ const { FieldValue, getFirestore } = require("firebase-admin/firestore");
 
 const PROJECT_ID = "workside-4b103";
 
+function getBucketName() {
+  if (process.env.FIREBASE_STORAGE_BUCKET) return process.env.FIREBASE_STORAGE_BUCKET;
+  try {
+    const credential = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON || "{}");
+    return credential.storage_bucket || credential.storageBucket || "";
+  } catch { return ""; }
+}
+
 function getDb() {
   let app = getApps()[0];
   if (!app) {
@@ -20,4 +28,4 @@ function getDb() {
 
 function serverTimestamp() { return FieldValue.serverTimestamp(); }
 
-module.exports = { getDb, serverTimestamp };
+module.exports = { getDb, getBucketName, serverTimestamp };
