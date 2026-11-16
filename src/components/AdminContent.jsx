@@ -100,6 +100,7 @@ export default function AdminContent() {
   const [id, setId] = useState("");
   const [form, setForm] = useState(emptyProject);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -180,27 +181,42 @@ export default function AdminContent() {
     catch { setMessage("Existing projects could not be imported. No saved project content was overwritten."); }
     finally { setBusy(false); }
   }
-  async function uploadImage(file, target, galleryIndex = -1) {
-    if (!file) return;
-    setBusy(true); setMessage("Optimizing and uploading image…");
+  async function uploadImageFiles(fileList, target) {
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
+    if (target === "gallery" && files.length + (form.gallery || []).length > 12) {
+      setMessage("A project can have up to 12 screenshots. Select fewer files.");
+      return;
+    }
+    setUploading(true);
+    const uploadedGallery = [];
+    let uploadedUrl = "";
     try {
-      const base64 = await fileToWebp(file);
-      const slug = form.slug || "new-project";
-      const uploaded = await request("upload", { method: "POST", body: JSON.stringify({ slug, mimeType: "image/webp", base64 }) });
-      if (target === "gallery") {
-        const gallery = [...(form.gallery || [])];
-        if (galleryIndex < 0) gallery.push({ url: uploaded.url, storagePath: uploaded.path, caption: file.name.replace(/\.[^.]+$/, ""), altText: file.name.replace(/\.[^.]+$/, ""), order: gallery.length });
-        else gallery[galleryIndex] = { ...gallery[galleryIndex], url: uploaded.url, storagePath: uploaded.path };
-        change("gallery", gallery);
-      } else {
-        change(target, uploaded.url);
-        if (target === "coverImageUrl") change("imageUrl", uploaded.url);
+      for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+        setMessage(`Optimizing ${file.name} (${index + 1} of ${files.length})…`);
+        const base64 = await fileToWebp(file);
+        setMessage(`Uploading ${file.name} (${index + 1} of ${files.length})…`);
+        const slug = form.slug || "new-project";
+        const uploaded = await request("upload", { method: "POST", body: JSON.stringify({ slug, mimeType: "image/webp", base64 }) });
+        uploadedUrl = uploaded.url;
+        if (target === "gallery") {
+          const label = file.name.replace(/\.[^.]+$/, "");
+          const galleryEntry = { url: uploaded.url, storagePath: uploaded.path, caption: label, altText: label, order: (form.gallery || []).length + uploadedGallery.length };
+          uploadedGallery.push(galleryEntry);
+          dirty.current = true;
+          setForm((current) => ({ ...current, gallery: [...(current.gallery || []), galleryEntry] }));
+        }
       }
-      setMessage("Image uploaded. Save the project to publish its media reference.");
+      if (target !== "gallery") {
+        change(target, uploadedUrl);
+        if (target === "coverImageUrl") change("imageUrl", uploadedUrl);
+      }
+      setMessage(`${files.length} image${files.length === 1 ? "" : "s"} uploaded. Review the preview and save the project to publish the image${files.length === 1 ? "" : "s"}.`);
     } catch (error) {
       const errors = { media_storage_not_configured: "Image storage is not configured on the server. Set FIREBASE_STORAGE_BUCKET for the approved Workside Firebase project.", invalid_media: "Use a valid PNG, JPEG, or WebP image file.", media_too_large: "The optimized image must be 4 MB or smaller." };
       setMessage(errors[error.code] || error.message || "The image could not be uploaded.");
-    } finally { setBusy(false); if (fileInput.current) fileInput.current.value = ""; }
+    } finally { setUploading(false); if (fileInput.current) fileInput.current.value = ""; }
   }
   function updateGallery(index, field, value) {
     const gallery = [...(form.gallery || [])]; gallery[index] = { ...gallery[index], [field]: value }; change("gallery", gallery);
@@ -232,7 +248,7 @@ export default function AdminContent() {
           <div className="admin-form-section"><h3>Project identity</h3>{input("Project name", "name", { required: true, maxLength: 120 })}{input("URL slug", "slug", { required: true, maxLength: 70, pattern: "[a-z0-9]+(?:-[a-z0-9]+)*", onChange: (e) => change("slug", e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "").replace(/--+/g, "-").replace(/^-|-$/g, "")) })}<div className="admin-content-fields">{input("Tagline", "type", { maxLength: 80 })}{input("Category", "category", { maxLength: 100 })}</div>{textarea("Short description", "description", { maxLength: 700, rows: 3 })}{textarea("Full description", "fullDescription", { maxLength: 8000, rows: 5 })}{textarea("Project status note", "statusNote", { maxLength: 4000, rows: 2 })}<label>Release status<select value={form.releaseStatus || "In development"} onChange={(e) => change("releaseStatus", e.target.value)}>{["In development", "Testing", "Published product", "Active internal product", "Client engagement", "Archived"].map((option) => <option key={option}>{option}</option>)}</select></label><label>Publication<select value={form.status} onChange={(e) => change("status", e.target.value)}><option value="draft">Draft — hidden</option><option value="published">Published — visible</option><option value="archived">Archived — hidden</option></select></label><div className="admin-content-fields"><label className="admin-checkbox"><input type="checkbox" checked={Boolean(form.featured)} onChange={(e) => change("featured", e.target.checked)} /> Featured project</label>{input("Display order (lower comes first)", "displayOrder", { type: "number", min: 0, max: 10000, onChange: (e) => change("displayOrder", Number(e.target.value)) })}</div></div>
           <div className="admin-form-section"><h3>Case study</h3>{textarea("Business problem", "businessProblem", { rows: 4, maxLength: 4000 })}{textarea("Solution developed", "solution", { rows: 4, maxLength: 4000 })}{textarea("Key features (one per line)", "keyFeatures", { rows: 5, maxLength: 6000 })}{textarea("Technical capabilities (one per line)", "technicalCapabilities", { rows: 5, maxLength: 6000 })}{textarea("Technologies (one per line)", "technologies", { rows: 3, maxLength: 3000 })}{textarea("Industries served (one per line)", "industries", { rows: 2, maxLength: 3000 })}{textarea("Development challenges (one per line)", "developmentChallenges", { rows: 3, maxLength: 3000 })}{textarea("Outcomes and accomplishments (one per line)", "outcomes", { rows: 3, maxLength: 3000 })}</div>
           <div className="admin-form-section"><h3>Public links</h3>{input("Website (HTTPS)", "websiteUrl", { type: "url", maxLength: 1000, placeholder: "https://" })}{input("iOS App Store (HTTPS)", "appStoreUrl", { type: "url", maxLength: 1000, placeholder: "https://apps.apple.com/…" })}{input("Google Play (HTTPS)", "googlePlayUrl", { type: "url", maxLength: 1000, placeholder: "https://play.google.com/…" })}{input("Demo (HTTPS)", "demoUrl", { type: "url", maxLength: 1000, placeholder: "https://" })}{input("Primary link label", "linkLabel", { maxLength: 120 })}</div>
-          <div className="admin-form-section"><h3>Project images</h3><p>Images are resized in your browser and uploaded as WebP. Maximum optimized size: 4 MB per image.</p><input ref={fileInput} className="admin-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => uploadImage(e.target.files?.[0], e.currentTarget.dataset.target || "coverImageUrl")} />{["logoUrl", "coverImageUrl"].map((field) => <div className="admin-media-field" key={field}><label>{field === "logoUrl" ? "Logo image" : "Cover image"}<input type="text" maxLength="1000" value={form[field] || ""} onChange={(e) => change(field, e.target.value)} placeholder="HTTPS or /projects/image.webp" /></label><button type="button" className="button button-quiet" onClick={() => { if (fileInput.current) { fileInput.current.dataset.target = field; fileInput.current.click(); } }} disabled={busy}><FiUpload aria-hidden="true" /> Upload</button>{form[field] && <img src={form[field]} alt="" className="admin-image-preview" />}{form[field] && <button type="button" className="admin-remove-media" onClick={() => change(field, "")}>Remove image</button>}</div>)}<label>Cover image alt text<input maxLength="300" value={form.imageAlt || ""} onChange={(e) => change("imageAlt", e.target.value)} /></label><label>Cover image caption<input maxLength="300" value={form.imageCaption || ""} onChange={(e) => change("imageCaption", e.target.value)} /></label><label>Image presentation<select value={form.imagePresentation || "cover"} onChange={(e) => change("imagePresentation", e.target.value)}><option value="cover">Landscape cover</option><option value="portrait">Portrait screenshot</option><option value="logo">Logo</option></select></label><div className="admin-gallery-heading"><strong>Screenshot gallery</strong><button type="button" className="button button-quiet" disabled={busy || (form.gallery || []).length >= 12} onClick={() => { if (fileInput.current) { fileInput.current.dataset.target = "gallery"; fileInput.current.click(); } }}><FiImage aria-hidden="true" /> Add screenshot</button></div>{(form.gallery || []).map((image, index) => <div className="admin-gallery-item" key={`${image.url}-${index}`}><img src={image.url} alt="" className="admin-image-preview" /><label>Caption<input maxLength="180" value={image.caption || ""} onChange={(e) => updateGallery(index, "caption", e.target.value)} /></label><label>Alt text<input required maxLength="180" value={image.altText || ""} onChange={(e) => updateGallery(index, "altText", e.target.value)} /></label><div><button type="button" aria-label="Move screenshot up" disabled={index === 0} onClick={() => moveGallery(index, -1)}><FiArrowUp /></button><button type="button" aria-label="Move screenshot down" disabled={index === form.gallery.length - 1} onClick={() => moveGallery(index, 1)}><FiArrowDown /></button><button type="button" aria-label="Remove screenshot" onClick={() => removeGallery(index)}><FiTrash2 /></button></div></div>)}</div>
+          <div className="admin-form-section"><h3>Project images</h3><p>Choose PNG, JPEG or WebP images. Files are resized in your browser to preserve aspect ratio and uploaded as WebP (maximum 4 MB each). Your URL/path fields remain available as an alternative.</p><input ref={fileInput} className="admin-file-input" type="file" accept="image/png,image/jpeg,image/webp" onChange={(e) => uploadImageFiles(e.target.files, e.currentTarget.dataset.target || "coverImageUrl")} />{["logoUrl", "coverImageUrl"].map((field) => <div className="admin-media-field" key={field}><label>{field === "logoUrl" ? "Logo image URL/path (optional)" : "Cover image URL/path (optional)"}<input type="text" maxLength="1000" value={form[field] || ""} onChange={(e) => change(field, e.target.value)} placeholder="HTTPS or /projects/image.webp" /></label><button type="button" className="button button-quiet admin-upload-button" onClick={() => { if (fileInput.current) { fileInput.current.dataset.target = field; fileInput.current.multiple = false; fileInput.current.click(); } }} disabled={busy || uploading}><FiUpload aria-hidden="true" /> {field === "logoUrl" ? "Upload Logo" : "Upload Cover Image"}</button>{form[field] && <img src={form[field]} alt="" className="admin-image-preview" />}{form[field] && <button type="button" className="admin-remove-media" onClick={() => change(field, "")}>Remove image</button>}</div>)}<label>Logo alt text<input maxLength="300" value={form.logoAlt || ""} onChange={(e) => change("logoAlt", e.target.value)} /></label><label>Cover image alt text<input maxLength="300" value={form.imageAlt || ""} onChange={(e) => change("imageAlt", e.target.value)} /></label><label>Cover image caption<input maxLength="300" value={form.imageCaption || ""} onChange={(e) => change("imageCaption", e.target.value)} /></label><label>Image presentation<select value={form.imagePresentation || "cover"} onChange={(e) => change("imagePresentation", e.target.value)}><option value="cover">Landscape cover</option><option value="portrait">Portrait screenshot</option><option value="logo">Logo</option></select></label><div className="admin-gallery-heading"><strong>Screenshot gallery</strong><button type="button" className="button button-dark admin-upload-button" disabled={busy || uploading || (form.gallery || []).length >= 12} onClick={() => { if (fileInput.current) { fileInput.current.dataset.target = "gallery"; fileInput.current.multiple = true; fileInput.current.click(); } }}><FiImage aria-hidden="true" /> Add Screenshots</button></div>{(form.gallery || []).map((image, index) => <div className="admin-gallery-item" key={`${image.url}-${index}`}><img src={image.url} alt="" className="admin-image-preview" /><label>Caption<input maxLength="180" value={image.caption || ""} onChange={(e) => updateGallery(index, "caption", e.target.value)} /></label><label>Alt text<input required maxLength="180" value={image.altText || ""} onChange={(e) => updateGallery(index, "altText", e.target.value)} /></label><div><button type="button" aria-label="Move screenshot up" disabled={index === 0} onClick={() => moveGallery(index, -1)}><FiArrowUp /></button><button type="button" aria-label="Move screenshot down" disabled={index === form.gallery.length - 1} onClick={() => moveGallery(index, 1)}><FiArrowDown /></button><button type="button" aria-label="Remove screenshot" onClick={() => removeGallery(index)}><FiTrash2 /></button></div></div>)}</div>
           <div className="admin-form-section"><h3>Search metadata</h3>{input("SEO title", "seoTitle", { maxLength: 160 })}{textarea("Meta description", "metaDescription", { rows: 3, maxLength: 320 })}{input("Canonical URL", "canonicalUrl", { type: "url", maxLength: 1000 })}{input("Open Graph image URL", "openGraphImageUrl", { type: "url", maxLength: 1000, placeholder: "https://" })}<label className="admin-checkbox"><input type="checkbox" checked={form.indexable !== false} onChange={(e) => change("indexable", e.target.checked)} /> Allow search indexing and include in sitemap</label></div>
         </> : <>
           <label>Customer quote<textarea required maxLength="1600" rows="5" value={form.quote} onChange={(e) => change("quote", e.target.value)} /></label>
@@ -241,7 +257,7 @@ export default function AdminContent() {
           <label>Image URL (optional, HTTPS)<input type="url" maxLength="1000" value={form.imageUrl || ""} onChange={(e) => change("imageUrl", e.target.value)} /></label>
           <label>Visibility<select value={form.status} onChange={(e) => change("status", e.target.value)}><option value="draft">Draft — hidden from the public site</option><option value="published">Published — visible on the public site</option><option value="archived">Archived — hidden</option></select></label>
         </>}
-        <div className="admin-content-actions"><button className="button button-dark" disabled={busy}>{busy ? "Saving…" : form.status === "published" ? "Save and publish" : "Save draft"}</button><button type="button" className="button button-quiet" disabled={busy} onClick={() => startNew(kind)}>Clear</button></div>
+        <div className="admin-content-actions"><button className="button button-dark" disabled={busy || uploading}>{busy ? "Saving…" : uploading ? "Uploading…" : form.status === "published" ? "Save and publish" : "Save draft"}</button><button type="button" className="button button-quiet" disabled={busy} onClick={() => startNew(kind)}>Clear</button></div>
       </form>
     </div>}{message && <p className="admin-content-status" role="status">{message}</p>}</div></main>;
 }

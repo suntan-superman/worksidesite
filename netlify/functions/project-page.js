@@ -45,7 +45,9 @@ function pageMarkup(project, template) {
   const title = project.caseStudy?.seoTitle || project.seoTitle || `${project.name} | Workside Software`;
   const description = project.caseStudy?.seoDescription || project.metaDescription || `${project.description} Explore this Workside Software ${String(project.type || "project").toLowerCase()}.`;
   const image = project.openGraphImageUrl || project.coverImageUrl || project.imageUrl || `${ORIGIN}/og-image.png`;
-  const visual = project.imageUrl ? `<figure><img src="${esc(project.imageUrl)}" alt="${esc(project.imageAlt || `${project.name} project image`)}">${project.imageCaption ? `<figcaption>${esc(project.imageCaption)}</figcaption>` : ""}</figure>` : "";
+  const visualUrl = project.coverImageUrl || project.imageUrl || project.logoUrl || "";
+  const visualAlt = project.coverImageUrl || project.imageUrl ? project.imageAlt || `${project.name} project image` : project.logoAlt || `${project.name} logo`;
+  const visual = visualUrl ? `<figure><img src="${esc(visualUrl)}" alt="${esc(visualAlt)}">${project.imageCaption ? `<figcaption>${esc(project.imageCaption)}</figcaption>` : ""}</figure>` : "";
   const links = [[project.appStoreUrl, "View on the App Store"], [project.googlePlayUrl, "View on Google Play"], [project.demoUrl, "View demo"], [project.websiteUrl || project.link, project.linkLabel || "Visit project website"]].filter(([url]) => url).map(([url, label]) => `<a href="${esc(url)}" rel="noopener noreferrer">${esc(label)}</a>`).join(" ");
   const gallery = (project.gallery || []).map((entry) => `<figure><img src="${esc(entry.url)}" alt="${esc(entry.altText)}" loading="lazy">${entry.caption ? `<figcaption>${esc(entry.caption)}</figcaption>` : ""}</figure>`).join("");
   let html = template

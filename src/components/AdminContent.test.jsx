@@ -31,3 +31,20 @@ test("Projects section exposes the built-in import and updates persisted status 
   expect(await screen.findByText("All 10 built-in projects are saved to Firestore.")).toBeTruthy();
   expect(screen.getAllByText(/Saved to Firestore · Updated/)).toHaveLength(10);
 });
+
+test("project image fields expose separate logo, cover, and multi-screenshot upload controls", async () => {
+  global.fetch = jest.fn().mockResolvedValue({ ok: true, json: async () => ({ projects: [], testimonials: [] }) });
+  render(<AdminContent />);
+  await screen.findByRole("button", { name: "Import 10 missing projects" });
+  fireEvent.click(screen.getAllByRole("button", { name: "Edit" })[0]);
+  const uploadLogo = screen.getByRole("button", { name: "Upload Logo" });
+  const uploadCover = screen.getByRole("button", { name: "Upload Cover Image" });
+  const addScreenshots = screen.getByRole("button", { name: "Add Screenshots" });
+  expect(uploadLogo).toBeTruthy();
+  expect(uploadCover).toBeTruthy();
+  expect(addScreenshots).toBeTruthy();
+  expect(screen.getByLabelText("Logo image URL/path (optional)")).toBeTruthy();
+  expect(screen.getByLabelText("Cover image URL/path (optional)")).toBeTruthy();
+  fireEvent.click(addScreenshots);
+  expect(document.querySelector('input[type="file"]').multiple).toBe(true);
+});
