@@ -4,7 +4,7 @@ const allowed = new Set(["https://worksidesoftware.com", "https://www.worksideso
 
 exports.handler = async (event) => {
   const origin = event.headers?.origin || event.headers?.Origin || "";
-  const headers = { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=120", "X-Content-Type-Options": "nosniff" };
+  const headers = { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
   if (origin && !allowed.has(origin) && !(process.env.NODE_ENV !== "production" && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin))) {
     return { statusCode: 403, headers: { ...headers, "Cache-Control": "no-store" }, body: JSON.stringify({ error: "origin_not_allowed" }) };
   }

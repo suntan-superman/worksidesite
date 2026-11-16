@@ -76,6 +76,15 @@ test("project links, visibility, and indexing fields are bounded and validated",
   assert.match(invalidCanonical.error, /Canonical URL/);
 });
 
+test("published gallery caption and alt text are preserved exactly for Firestore writes", () => {
+  const caption = "Route Logistics Management Dashboard";
+  const altText = "Route Logistics dispatch dashboard with scheduled field jobs";
+  const result = __test.validateContent({ kind: "project", slug: "route-logistics", name: "Route Logistics", type: "Product", category: "Field service", description: "Dispatch software", status: "published", gallery: [{ url: "https://storage.example.test/route.webp", caption, altText, order: 0 }] });
+  assert.equal(result.data.gallery[0].caption, caption);
+  assert.equal(result.data.gallery[0].altText, altText);
+  assert.equal(result.data.gallery[0].order, 0);
+});
+
 test("admin session rejects missing, expired, and malformed cookies", () => {
   const previous = process.env.WORKSIDE_CONTENT_SESSION_SECRET;
   process.env.WORKSIDE_CONTENT_SESSION_SECRET = "x".repeat(48);
