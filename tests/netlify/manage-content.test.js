@@ -92,3 +92,13 @@ test("content listing rejects an unauthenticated request without opening Firesto
   assert.equal(response.statusCode, 401);
   assert.equal(JSON.parse(response.body).error, "authentication_required");
 });
+
+test("storage upload diagnostics classify HTTP and Firebase Admin gRPC errors without returning error messages", () => {
+  assert.equal(__test.storageErrorDiagnostic({ code: 403 }), "storage_permission_denied");
+  assert.equal(__test.storageErrorDiagnostic({ code: 7, message: "sensitive provider response" }), "storage_permission_denied");
+  assert.equal(__test.storageErrorDiagnostic({ response: { statusCode: 404 } }), "storage_bucket_or_object_not_found");
+  assert.equal(__test.storageErrorDiagnostic({ code: 3 }), "storage_request_rejected");
+  assert.equal(__test.storageErrorDiagnostic({ code: 14 }), "storage_service_unavailable");
+  assert.equal(__test.storageErrorDiagnostic({ code: "ETIMEDOUT" }), "storage_network_error");
+  assert.equal(__test.storageErrorDiagnostic({ message: "sensitive provider response" }), "storage_upload_failed");
+});

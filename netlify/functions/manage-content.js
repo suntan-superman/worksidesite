@@ -56,6 +56,26 @@ function secureUrl(input, max = 1000) {
   catch { return undefined; }
 }
 
+function storageErrorDiagnostic(error) {
+  const rawCode = String(error?.code ?? "").toLowerCase();
+  const status = Number(error?.response?.status || error?.response?.statusCode || error?.statusCode || (/^\d{3}$/.test(rawCode) ? rawCode : Number.isInteger(error?.code) ? error.code : 0));
+  const reason = String(error?.errors?.[0]?.reason || "").toLowerCase();
+  if ([403, 7, 16].includes(status) || ["forbidden", "permission_denied", "unauthenticated"].includes(reason) || /permission_denied|forbidden|unauthenticated/.test(rawCode)) return "storage_permission_denied";
+  if ([404, 5].includes(status) || ["notfound", "not_found"].includes(reason) || /not_found|not-found/.test(rawCode)) return "storage_bucket_or_object_not_found";
+  if ([400, 3].includes(status) || ["invalid", "invalidargument", "invalid_argument"].includes(reason) || /invalid_argument|invalid-argument/.test(rawCode)) return "storage_request_rejected";
+  if ([429, 8, 14].includes(status) || status >= 500 || ["ratelimitexceeded", "backenderror", "unavailable", "resource_exhausted"].includes(reason)) return "storage_service_unavailable";
+  if (["enotfound", "econnreset", "etimedout", "eai_again"].includes(rawCode)) return "storage_network_error";
+  return "storage_upload_failed";
+}
+
+function logStorageFailure(error, bucketName) {
+  const diagnostic = storageErrorDiagnostic(error);
+  const code = String(error?.code ?? "unknown").slice(0, 50);
+  const status = Number(error?.response?.status || error?.response?.statusCode || error?.statusCode || (/^\d{3}$/.test(code) ? code : Number.isInteger(error?.code) ? error.code : 0)) || undefined;
+  console.error("[manage-content] media upload failed", JSON.stringify({ diagnostic, code, status, bucket: bucketName }));
+  return diagnostic;
+}
+
 function validateGallery(input) {
   if (input === undefined || input === null) return [];
   if (!Array.isArray(input) || input.length > 12) return null;
@@ -337,7 +357,7 @@ exports.handler = async (event) => {
         const objectPath = `workside-portfolio/${slug}/${token}.${extension}`;
         await bucket.file(objectPath).save(bytes, { resumable: false, metadata: { contentType: mimeType, cacheControl: "public,max-age=31536000,immutable", metadata: { firebaseStorageDownloadTokens: token } } });
         return result(200, { ok: true, path: objectPath, url: `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(objectPath)}?alt=media&token=${token}` });
-      } catch (error) { console.error("[manage-content] media upload failed", error?.code || "unknown"); return result(503, { error: "media_upload_failed" }); }
+      } catch (error) { return result(503, { error: "media_upload_failed", diagnostic: logStorageFailure(error, bucketName) }); }
     }
     if (action === "removeMedia" && body?.path) {
       const objectPath = value(body.path, 300, true);
@@ -369,4 +389,4 @@ exports.handler = async (event) => {
   }
 };
 
-exports.__test = { validateContent, validSession, loginLimit, constantTimeEqual, importMissingBuiltIns };
+exports.__test = { validateContent, validSession, loginLimit, constantTimeEqual, importMissingBuiltIns, storageErrorDiagnostic };

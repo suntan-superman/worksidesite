@@ -17,6 +17,7 @@ async function request(action, options = {}) {
   if (!response.ok) {
     const error = new Error(body.message || body.error || "The request could not be completed.");
     error.code = body.error;
+    error.diagnostic = body.diagnostic;
     throw error;
   }
   return body;
@@ -214,8 +215,20 @@ export default function AdminContent() {
       }
       setMessage(`${files.length} image${files.length === 1 ? "" : "s"} uploaded. Review the preview and save the project to publish the image${files.length === 1 ? "" : "s"}.`);
     } catch (error) {
-      const errors = { media_storage_not_configured: "Image storage is not configured on the server. Set FIREBASE_STORAGE_BUCKET for the approved Workside Firebase project.", invalid_media: "Use a valid PNG, JPEG, or WebP image file.", media_too_large: "The optimized image must be 4 MB or smaller." };
-      setMessage(errors[error.code] || error.message || "The image could not be uploaded.");
+      const errors = {
+        media_storage_not_configured: "Image storage is not configured on the server. Set FIREBASE_STORAGE_BUCKET to the existing Workside bucket.",
+        invalid_media: "Use a valid PNG, JPEG, or WebP image file.",
+        media_too_large: "The optimized image must be 4 MB or smaller.",
+      };
+      const diagnostics = {
+        storage_permission_denied: "Firebase Storage returned permission denied (403). No image was saved. Check the Netlify function log diagnostic before changing IAM.",
+        storage_bucket_or_object_not_found: "Firebase Storage returned not found (404). Verify the configured bucket name and its project.",
+        storage_request_rejected: "Firebase Storage rejected the upload request (400). Verify the bucket and file format.",
+        storage_service_unavailable: "Firebase Storage is temporarily unavailable. Try again shortly.",
+        storage_network_error: "The Netlify function could not reach Firebase Storage. Try again shortly.",
+        storage_upload_failed: "The server could not upload this image. Check the Netlify function log diagnostic and retry.",
+      };
+      setMessage(errors[error.code] || diagnostics[error.diagnostic] || error.message || "The image could not be uploaded.");
     } finally { setUploading(false); if (fileInput.current) fileInput.current.value = ""; }
   }
   function updateGallery(index, field, value) {
