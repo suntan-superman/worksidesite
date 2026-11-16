@@ -183,6 +183,30 @@ async function cleanupUnusedImages(db, collection, previous, next) {
   } catch (error) { console.error("[manage-content] unused image cleanup failed", error?.code || "unknown"); }
 }
 
+async function importMissingBuiltIns(collection, projects) {
+  let created = 0;
+  const skipped = [];
+  let seedIndex = 0;
+  for (const source of projects) {
+    const candidate = { ...source, kind: "project", status: source.status || "published", featured: source.featured ?? seedIndex < 3, displayOrder: source.displayOrder ?? seedIndex };
+    const validated = validateContent(candidate);
+    if (!validated.data || !BUILT_IN_SLUGS.has(validated.data.slug)) throw Object.assign(new Error("invalid_migration"), { code: "invalid_migration" });
+    const item = validated.data;
+    const matches = await collection.where("slug", "==", item.slug).limit(1).get();
+    if (!matches.empty) { skipped.push(item.slug); seedIndex++; continue; }
+    const ref = collection.doc(item.slug);
+    try {
+      await ref.create({ ...item, id: ref.id, createdAt: serverTimestamp(), updatedAt: serverTimestamp(), publishedAt: item.status === "published" ? serverTimestamp() : null });
+      created++;
+    } catch (error) {
+      if (error?.code === 6 || error?.code === "6" || error?.code === "already-exists") skipped.push(item.slug);
+      else throw error;
+    }
+    seedIndex++;
+  }
+  return { created, skipped };
+}
+
 function originAllowed(event) {
   const headers = Object.fromEntries(Object.entries(event.headers || {}).map(([key, val]) => [key.toLowerCase(), val]));
   let origin = headers.origin;
@@ -289,22 +313,11 @@ exports.handler = async (event) => {
     }
     if (action === "migrate" && Array.isArray(body.projects) && body.projects.length <= 20) {
       const collection = db.collection("workside_site_projects");
-      let created = 0;
-      const skipped = [];
-      let seedIndex = 0;
-      for (const source of body.projects) {
-        const candidate = { ...source, kind: "project", status: source.status || "published", featured: source.featured ?? seedIndex < 3, displayOrder: source.displayOrder ?? seedIndex };
-        const validated = validateContent(candidate);
-        if (!validated.data || !BUILT_IN_SLUGS.has(validated.data.slug)) return result(422, { error: "invalid_migration" });
-        const matches = await collection.where("slug", "==", validated.data.slug).limit(1).get();
-        if (matches.empty) {
-          const ref = collection.doc(validated.data.slug);
-          await ref.create({ ...validated.data, id: ref.id, createdAt: serverTimestamp(), updatedAt: serverTimestamp(), publishedAt: validated.data.status === "published" ? serverTimestamp() : null });
-          created++;
-        } else skipped.push(validated.data.slug);
-        seedIndex++;
+      try { return result(200, { ok: true, ...(await importMissingBuiltIns(collection, body.projects)) }); }
+      catch (error) {
+        if (error?.code === "invalid_migration") return result(422, { error: "invalid_migration" });
+        throw error;
       }
-      return result(200, { ok: true, created, skipped });
     }
     if (action === "upload" && body && typeof body.base64 === "string") {
       const slug = value(body.slug, 70, true);
@@ -356,4 +369,4 @@ exports.handler = async (event) => {
   }
 };
 
-exports.__test = { validateContent, validSession, loginLimit, constantTimeEqual };
+exports.__test = { validateContent, validSession, loginLimit, constantTimeEqual, importMissingBuiltIns };

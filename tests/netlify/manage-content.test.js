@@ -48,6 +48,25 @@ test("all migrated built-in project entries pass server-side validation without 
   }
 });
 
+test("built-in import creates only missing slugs and preserves edited Firestore records across reruns", async () => {
+  const rows = new Map([["sageset", { id: "owner-sageset", slug: "sageset", name: "Owner edited SageSet", status: "draft", description: "Private owner copy" }]]);
+  const collection = {
+    where(field, operator, slug) { return { limit() { return { async get() { const row = rows.get(slug); return { empty: !row, docs: row ? [{ id: row.id, ref: { id: row.id }, data: () => row }] : [] }; } }; } }; },
+    doc(slug) { return { id: slug, async create(data) { if (rows.has(slug)) throw Object.assign(new Error("exists"), { code: "already-exists" }); rows.set(slug, data); } }; },
+  };
+  const first = await __test.importMissingBuiltIns(collection, defaultProjects());
+  assert.equal(first.created, 9);
+  assert.deepEqual(first.skipped, ["sageset"]);
+  assert.equal(rows.get("sageset").name, "Owner edited SageSet");
+  assert.equal(rows.get("sageset").status, "draft");
+  assert.equal(rows.get("route-logistics").status, "published");
+  assert.equal(rows.size, 10);
+  const rerun = await __test.importMissingBuiltIns(collection, defaultProjects());
+  assert.equal(rerun.created, 0);
+  assert.equal(rerun.skipped.length, 10);
+  assert.equal(rows.get("sageset").description, "Private owner copy");
+});
+
 test("project links, visibility, and indexing fields are bounded and validated", () => {
   const valid = __test.validateContent({ kind: "project", slug: "managed-project", name: "Managed", type: "Product", category: "Web", description: "Managed project", link: "https://example.com", linkLabel: "Visit site", status: "published", featured: true, displayOrder: 3, indexable: false, canonicalUrl: "https://worksidesoftware.com/work/managed-project", keyFeatures: ["Fast"], gallery: [{ url: "https://example.com/shot.webp", caption: "Home", altText: "Home screen", order: 0 }] });
   assert.equal(valid.data.featured, true);
