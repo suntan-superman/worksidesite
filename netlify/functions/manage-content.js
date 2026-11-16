@@ -116,10 +116,12 @@ function validateContent(input) {
     const gallery = validateGallery(input.gallery);
     if (!features || !technical || !technologies || !industries || !challenges || !outcomes || !gallery) return { error: "Check the feature lists and screenshot gallery fields." };
     const externalLinks = {};
-    for (const key of ["websiteUrl", "appStoreUrl", "googlePlayUrl", "demoUrl", "openGraphImageUrl"]) {
+    for (const key of ["websiteUrl", "appStoreUrl", "googlePlayUrl", "demoUrl"]) {
       externalLinks[key] = secureUrl(input[key], 1000);
       if (externalLinks[key] === undefined) return { error: "Project links and images must use valid HTTPS URLs." };
     }
+    const openGraphImageUrl = validImageUrl(input.openGraphImageUrl || "");
+    if (openGraphImageUrl === undefined) return { error: "Open Graph images must use a valid HTTPS or local project image URL." };
     const releaseStatus = value(input.releaseStatus || "In development", 40, true);
     if (!RELEASE_STATUSES.has(releaseStatus)) return { error: "Choose a valid project release status." };
     const featured = Boolean(input.featured);
@@ -128,8 +130,9 @@ function validateContent(input) {
     const canonical = extras.canonicalUrl;
     if (canonical && canonical !== `https://worksidesoftware.com/work/${slug}`) return { error: "Canonical URL must match the project's public URL." };
     const media = {
-      logoUrl: secureUrl(input.logoUrl || "", 1000),
-      coverImageUrl: secureUrl(input.coverImageUrl || "", 1000),
+      logoUrl: validImageUrl(input.logoUrl || ""),
+      coverImageUrl: validImageUrl(input.coverImageUrl || ""),
+      openGraphImageUrl,
     };
     if (media.logoUrl === undefined || media.coverImageUrl === undefined) return { error: "Logo and cover images must use valid HTTPS URLs." };
     const imagePresentation = value(input.imagePresentation || "cover", 20);

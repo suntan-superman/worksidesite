@@ -39,11 +39,12 @@ test("published projects require a short public description", () => {
 
 test("all migrated built-in project entries pass server-side validation without losing local image paths", () => {
   for (const source of defaultProjects()) {
-    const result = __test.validateContent({ ...source, kind: "project", status: "published" });
+    const result = __test.validateContent({ ...source, kind: "project", status: "published", coverImageUrl: source.imageUrl || "" });
     assert.ok(result.data, `${source.slug}: ${result.error}`);
     assert.equal(result.data.caseStudy.problem, source.caseStudy.problem);
     assert.deepEqual(result.data.caseStudy.features, source.caseStudy.features);
     assert.equal(result.data.imageUrl, source.imageUrl || "");
+    assert.equal(result.data.coverImageUrl, source.imageUrl || "");
   }
 });
 
