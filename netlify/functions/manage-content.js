@@ -26,7 +26,7 @@ function validImageUrl(input) {
 
 const RELEASE_STATUSES = new Set(["In development", "Testing", "Published product", "Active internal product", "Client engagement", "Archived"]);
 const VISIBILITY = new Set(["draft", "published", "archived"]);
-const BUILT_IN_SLUGS = new Set(["route-logistics", "sageset", "merxus-ai", "radiusiq", "property-intelligence", "workside-signals", "galageaux-arcade", "workside-logistics", "cutpro-tree-service", "sellmykernhome"]);
+const BUILT_IN_SLUGS = new Set(["anyryde", "route-logistics", "sageset", "merxus-ai", "radiusiq", "property-intelligence", "workside-signals", "galageaux-arcade", "workside-logistics", "cutpro-tree-service", "sellmykernhome"]);
 
 function textField(input, max = 3000) {
   if (input === undefined || input === null || input === "") return "";

@@ -55,16 +55,26 @@ test("built-in import creates only missing slugs and preserves edited Firestore 
     doc(slug) { return { id: slug, async create(data) { if (rows.has(slug)) throw Object.assign(new Error("exists"), { code: "already-exists" }); rows.set(slug, data); } }; },
   };
   const first = await __test.importMissingBuiltIns(collection, defaultProjects());
-  assert.equal(first.created, 9);
+  assert.equal(first.created, 10);
   assert.deepEqual(first.skipped, ["sageset"]);
   assert.equal(rows.get("sageset").name, "Owner edited SageSet");
   assert.equal(rows.get("sageset").status, "draft");
   assert.equal(rows.get("route-logistics").status, "published");
-  assert.equal(rows.size, 10);
+  assert.equal(rows.size, 11);
   const rerun = await __test.importMissingBuiltIns(collection, defaultProjects());
   assert.equal(rerun.created, 0);
-  assert.equal(rerun.skipped.length, 10);
+  assert.equal(rerun.skipped.length, 11);
   assert.equal(rows.get("sageset").description, "Private owner copy");
+});
+
+test("AnyRyde is listed as a shelved built-in project with only public product links", () => {
+  const anyryde = defaultProjects().find((project) => project.slug === "anyryde");
+  assert.ok(anyryde);
+  assert.equal(anyryde.releaseStatus, "Archived");
+  assert.equal(anyryde.statusNote.startsWith("Shelved."), true);
+  assert.equal(anyryde.link, "https://anyryde.com/");
+  assert.equal(anyryde.logoUrl, "/projects/anyryde-logo.png");
+  assert.equal(anyryde.caseStudy.features.length > 0, true);
 });
 
 test("project links, visibility, and indexing fields are bounded and validated", () => {
