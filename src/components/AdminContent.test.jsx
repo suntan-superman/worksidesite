@@ -43,8 +43,16 @@ test("project image fields expose separate logo, cover, and multi-screenshot upl
   expect(uploadLogo).toBeTruthy();
   expect(uploadCover).toBeTruthy();
   expect(addScreenshots).toBeTruthy();
+  expect(uploadLogo.className).toContain("button-dark");
+  expect(uploadCover.className).toContain("button-dark");
   expect(screen.getByLabelText("Logo image URL/path (optional)")).toBeTruthy();
   expect(screen.getByLabelText("Cover image URL/path (optional)")).toBeTruthy();
+  const filePicker = document.querySelector('input[type="file"]');
+  fireEvent.click(uploadLogo);
+  expect(filePicker.dataset.target).toBe("logoUrl");
+  expect(filePicker.multiple).toBe(false);
+  fireEvent.click(uploadCover);
+  expect(filePicker.dataset.target).toBe("coverImageUrl");
   fireEvent.click(addScreenshots);
-  expect(document.querySelector('input[type="file"]').multiple).toBe(true);
+  expect(filePicker.multiple).toBe(true);
 });
