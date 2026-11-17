@@ -10,6 +10,7 @@ test("sitemap keeps public defaults, excludes unpublished and non-indexable over
     { data: () => ({ slug: "new-draft-project", status: "draft" }) },
   ];
   const slugs = __test.indexableSlugs(docs);
+  assert.ok(slugs.has("anyryde"));
   assert.ok(slugs.has("merxus-ai"));
   assert.ok(!slugs.has("sageset"));
   assert.ok(!slugs.has("route-logistics"));

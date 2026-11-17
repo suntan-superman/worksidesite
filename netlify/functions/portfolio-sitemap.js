@@ -2,7 +2,7 @@ const { getDb } = require("../shared/content-store");
 
 const ORIGIN = "https://worksidesoftware.com";
 const STATIC_ROUTES = ["/", "/services", "/work", "/about", "/contact", "/support", "/privacy", "/terms"];
-const BUILT_IN_SLUGS = ["route-logistics", "sageset", "merxus-ai", "radiusiq", "property-intelligence", "workside-signals", "galageaux-arcade", "workside-logistics", "cutpro-tree-service", "sellmykernhome"];
+const BUILT_IN_SLUGS = ["anyryde", "route-logistics", "sageset", "merxus-ai", "radiusiq", "property-intelligence", "workside-signals", "galageaux-arcade", "workside-logistics", "cutpro-tree-service", "sellmykernhome"];
 const xmlEscape = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function indexableSlugs(docs) {
