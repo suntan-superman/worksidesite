@@ -18,6 +18,7 @@ import Terms from "./components/Terms";
 import { Portfolio, ProjectDetail } from "./components/Portfolio";
 import Seo from "./components/Seo";
 import AdminContent from "./components/AdminContent";
+import ScrollManager from "./components/ScrollManager";
 
 
 
@@ -25,6 +26,7 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <ScrollManager />
       <div>
         <TopBar />
         <NavBar />
