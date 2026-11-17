@@ -96,6 +96,31 @@ test("admin session rejects missing, expired, and malformed cookies", () => {
   else process.env.WORKSIDE_CONTENT_SESSION_SECRET = previous;
 });
 
+test("admin idle keepalive rotates the signed session cookie without changing its idle lifetime", async () => {
+  const previous = process.env.WORKSIDE_CONTENT_SESSION_SECRET;
+  process.env.WORKSIDE_CONTENT_SESSION_SECRET = "x".repeat(48);
+  try {
+    const now = Date.now();
+    const cookie = __test.sessionCookie(now + __test.SESSION_MS).split(";")[0];
+    assert.equal(__test.SESSION_MS, 60 * 60 * 1000 + 30 * 1000);
+    assert.equal(__test.validSession(cookie, now), true);
+    assert.equal(__test.validSession(cookie, now + __test.SESSION_MS), false);
+
+    const response = await handler({
+      httpMethod: "POST",
+      queryStringParameters: { action: "keepalive" },
+      headers: { origin: "https://worksidesoftware.com", cookie },
+      body: "{}",
+    });
+    assert.equal(response.statusCode, 200);
+    assert.match(response.headers["Set-Cookie"], /Max-Age=3630/);
+    assert.notEqual(response.headers["Set-Cookie"].split(";")[0], cookie);
+  } finally {
+    if (previous === undefined) delete process.env.WORKSIDE_CONTENT_SESSION_SECRET;
+    else process.env.WORKSIDE_CONTENT_SESSION_SECRET = previous;
+  }
+});
+
 test("content listing rejects an unauthenticated request without opening Firestore", async () => {
   const response = await handler({ httpMethod: "GET", queryStringParameters: { action: "list" }, headers: { origin: "https://worksidesoftware.com" } });
   assert.equal(response.statusCode, 401);

@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import AdminContent from "./AdminContent";
 import { projects } from "./portfolioData";
 
@@ -55,4 +55,36 @@ test("project image fields expose separate logo, cover, and multi-screenshot upl
   expect(filePicker.dataset.target).toBe("coverImageUrl");
   fireEvent.click(addScreenshots);
   expect(filePicker.multiple).toBe(true);
+});
+
+test("admin warns after 55 idle minutes and signs out at one hour", async () => {
+  jest.useFakeTimers();
+  global.fetch = jest.fn(async (url) => {
+    const action = String(url).split("action=")[1];
+    if (action === "list") return { ok: true, json: async () => ({ projects: [], testimonials: [] }) };
+    return { ok: true, json: async () => ({ ok: true }) };
+  });
+  try {
+    render(<AdminContent />);
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(screen.getByRole("button", { name: "Sign out" })).toBeTruthy();
+
+    await act(async () => { jest.advanceTimersByTime(55 * 60 * 1000); });
+    expect(screen.getByRole("alertdialog").textContent).toContain("05:00");
+    expect(screen.getByRole("button", { name: "Stay signed in" })).toBeTruthy();
+
+    await act(async () => {
+      jest.advanceTimersByTime(5 * 60 * 1000);
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(screen.getByLabelText("Admin password")).toBeTruthy();
+    expect(screen.getByRole("status").textContent).toContain("one hour of inactivity");
+  } finally {
+    jest.useRealTimers();
+  }
 });

@@ -1,8 +1,11 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FiEye, FiEyeOff, FiImage, FiTrash2, FiUpload, FiArrowUp, FiArrowDown } from "react-icons/fi";
 import { projects as defaultProjects } from "./portfolioData";
 
 const endpoint = "/.netlify/functions/manage-content";
+const IDLE_TIMEOUT_MS = 60 * 60 * 1000;
+const IDLE_WARNING_MS = 5 * 60 * 1000;
+const KEEPALIVE_THROTTLE_MS = 30 * 1000;
 const emptyProject = {
   slug: "", name: "", type: "", category: "", description: "", detail: "", fullDescription: "", statusNote: "", mark: "", className: "custom",
   link: "", linkLabel: "", websiteUrl: "", appStoreUrl: "", googlePlayUrl: "", demoUrl: "", imageUrl: "", logoUrl: "", coverImageUrl: "", imageAlt: "", imageCaption: "", imagePresentation: "cover", gallery: [],
@@ -92,6 +95,12 @@ function displayDate(value) {
   return date && !Number.isNaN(date.getTime()) ? date.toLocaleDateString() : "Timestamp unavailable";
 }
 
+function formatIdleCountdown(seconds) {
+  const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const remainingSeconds = (seconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${remainingSeconds}`;
+}
+
 export default function AdminContent() {
   const [authenticated, setAuthenticated] = useState(false);
   const [password, setPassword] = useState("");
@@ -102,6 +111,7 @@ export default function AdminContent() {
   const [form, setForm] = useState(emptyProject);
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [idleWarningSeconds, setIdleWarningSeconds] = useState(null);
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
@@ -109,6 +119,9 @@ export default function AdminContent() {
   const [publicationFilter, setPublicationFilter] = useState("all");
   const fileInput = useRef(null);
   const dirty = useRef(false);
+  const lastActivity = useRef(Date.now());
+  const lastKeepalive = useRef(0);
+  const keepaliveInFlight = useRef(null);
 
   const projectRows = useMemo(() => defaultProjects.map((base) => {
     const saved = items.projects.find((entry) => entry.slug === base.slug);
@@ -130,6 +143,65 @@ export default function AdminContent() {
     setAuthenticated(true);
   }
   useEffect(() => { refresh().catch(() => {}); }, []);
+  const clearAdminSession = useCallback((status) => {
+    setAuthenticated(false);
+    setItems({ projects: [], testimonials: [] });
+    setBusy(false);
+    setUploading(false);
+    setIdleWarningSeconds(null);
+    dirty.current = false;
+    setMessage(status);
+  }, []);
+  const expireIdleSession = useCallback(() => {
+    clearAdminSession("You were signed out after one hour of inactivity. Sign in again to continue.");
+    request("logout", { method: "POST", body: "{}" }).catch(() => {});
+  }, [clearAdminSession]);
+  const keepSessionAlive = useCallback(async (force = false) => {
+    const now = Date.now();
+    if (!force && now - lastKeepalive.current < KEEPALIVE_THROTTLE_MS) return true;
+    if (keepaliveInFlight.current) return keepaliveInFlight.current;
+    lastKeepalive.current = now;
+    keepaliveInFlight.current = request("keepalive", { method: "POST", body: "{}" })
+      .then(() => true)
+      .catch((error) => {
+        if (error.code === "authentication_required") expireIdleSession();
+        else setMessage("Your session could not be refreshed. Please try again.");
+        return false;
+      })
+      .finally(() => { keepaliveInFlight.current = null; });
+    return keepaliveInFlight.current;
+  }, [expireIdleSession]);
+  const recordActivity = useCallback(() => {
+    lastActivity.current = Date.now();
+    setIdleWarningSeconds(null);
+    keepSessionAlive();
+  }, [keepSessionAlive]);
+  const staySignedIn = useCallback(async () => {
+    lastActivity.current = Date.now();
+    if (await keepSessionAlive(true)) setIdleWarningSeconds(null);
+  }, [keepSessionAlive]);
+  useEffect(() => {
+    if (!authenticated) return undefined;
+    lastActivity.current = Date.now();
+    lastKeepalive.current = Date.now() - KEEPALIVE_THROTTLE_MS;
+    keepSessionAlive(true);
+
+    const checkIdleTime = () => {
+      const remaining = IDLE_TIMEOUT_MS - (Date.now() - lastActivity.current);
+      if (remaining <= 0) { expireIdleSession(); return; }
+      if (remaining <= IDLE_WARNING_MS) setIdleWarningSeconds(Math.ceil(remaining / 1000));
+      else setIdleWarningSeconds(null);
+    };
+    const activityEvents = ["pointerdown", "keydown", "scroll", "wheel", "touchstart"];
+    activityEvents.forEach((eventName) => window.addEventListener(eventName, recordActivity, { passive: true }));
+    const timer = window.setInterval(checkIdleTime, 1000);
+    document.addEventListener("visibilitychange", checkIdleTime);
+    return () => {
+      activityEvents.forEach((eventName) => window.removeEventListener(eventName, recordActivity));
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", checkIdleTime);
+    };
+  }, [authenticated, expireIdleSession, keepSessionAlive, recordActivity]);
   useEffect(() => {
     const warn = (event) => { if (dirty.current) { event.preventDefault(); event.returnValue = ""; } };
     window.addEventListener("beforeunload", warn);
@@ -154,7 +226,7 @@ export default function AdminContent() {
   }
   async function signOut() {
     setBusy(true);
-    try { await request("logout", { method: "POST", body: "{}" }); setAuthenticated(false); setItems({ projects: [], testimonials: [] }); dirty.current = false; setMessage("Signed out."); }
+    try { await request("logout", { method: "POST", body: "{}" }); clearAdminSession("Signed out."); }
     catch { setMessage("Could not sign out. Close this tab to end the session."); }
     finally { setBusy(false); }
   }
@@ -245,7 +317,7 @@ export default function AdminContent() {
   const isProject = kind === "project";
   const input = (label, field, props = {}) => { const { onChange, ...inputProps } = props; return <label>{label}<input {...inputProps} value={form[field] ?? ""} onChange={(event) => onChange ? onChange(event) : change(field, event.target.value)} /></label>; };
   const textarea = (label, field, props = {}) => <label>{label}<textarea {...props} value={lines(form[field])} onChange={(event) => change(field, event.target.value)} /></label>;
-  return <main className="admin-content-page"><div className="container-max"><header className="admin-content-heading"><div><p className="eyebrow eyebrow-dark">WORKSIDE CONTENT</p><h1>Portfolio and testimonials</h1><p>Manage project details, visibility, screenshots and search information. Only published, indexable projects appear in public listings and the sitemap.</p></div>{authenticated && <button className="button button-dark" onClick={signOut} disabled={busy}>Sign out</button>}</header>
+  return <main className="admin-content-page"><div className="container-max">{authenticated && idleWarningSeconds !== null && <aside className="admin-idle-warning" role="alertdialog" aria-live="assertive" aria-labelledby="admin-idle-title"><div><strong id="admin-idle-title">Still working?</strong><p>You’ll be signed out in {formatIdleCountdown(idleWarningSeconds)} after inactivity. Save any unsaved changes or stay signed in.</p></div><div><button type="button" className="button button-dark" onClick={staySignedIn}>Stay signed in</button><button type="button" className="button button-quiet" onClick={signOut}>Sign out now</button></div></aside>}<header className="admin-content-heading"><div><p className="eyebrow eyebrow-dark">WORKSIDE CONTENT</p><h1>Portfolio and testimonials</h1><p>Manage project details, visibility, screenshots and search information. Only published, indexable projects appear in public listings and the sitemap.</p></div>{authenticated && <button className="button button-dark" onClick={signOut} disabled={busy}>Sign out</button>}</header>
     {!authenticated ? <form className="admin-content-panel admin-content-login" onSubmit={signIn}><label htmlFor="admin-password">Admin password</label><div className="admin-password-field"><input id="admin-password" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} /><button type="button" className="admin-password-toggle" aria-label={showPassword ? "Hide password" : "Show password"} aria-pressed={showPassword} onClick={() => setShowPassword((visible) => !visible)}>{showPassword ? <FiEyeOff aria-hidden="true" /> : <FiEye aria-hidden="true" />}</button></div><button className="button button-dark" disabled={busy}>{busy ? "Signing in…" : "Sign in"}</button><p>Content editing is restricted to authorized Workside administrators.</p></form> : <div className="admin-content-layout">
       <section className="admin-content-panel"><div className="admin-content-tabs"><button type="button" className={kind === "project" ? "selected" : ""} onClick={() => startNew("project")}>Projects</button><button type="button" className={kind === "testimonial" ? "selected" : ""} onClick={() => startNew("testimonial")}>Testimonials</button></div>
         {isProject && <>

@@ -3,7 +3,7 @@ const { getDb, getBucketName, serverTimestamp } = require("../shared/content-sto
 const { getStorage } = require("firebase-admin/storage");
 
 const COOKIE = "workside_content_admin";
-const SESSION_MS = 8 * 60 * 60 * 1000;
+const SESSION_MS = 60 * 60 * 1000 + 30 * 1000;
 const attempts = new Map();
 
 function result(statusCode, body, extraHeaders = {}) {
@@ -238,6 +238,7 @@ function originAllowed(event) {
 
 function signingKey() { return process.env.WORKSIDE_CONTENT_SESSION_SECRET || ""; }
 function signature(expires) { return createHmac("sha256", signingKey()).update(String(expires)).digest("hex"); }
+function sessionCookie(expires = Date.now() + SESSION_MS) { return `${COOKIE}=${expires}.${signature(expires)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${Math.floor(SESSION_MS / 1000)}`; }
 function validSession(cookieHeader, now = Date.now()) {
   if (signingKey().length < 32) return false;
   const item = String(cookieHeader || "").split(";").map((part) => part.trim()).find((part) => part.startsWith(`${COOKIE}=`));
@@ -283,15 +284,14 @@ exports.handler = async (event) => {
     const body = await parseBody(event);
     if (!constantTimeEqual(body?.password, password)) return result(401, { error: "invalid_credentials" });
     attempts.delete(ip);
-    const expires = Date.now() + SESSION_MS;
-    const cookie = `${COOKIE}=${expires}.${signature(expires)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=${SESSION_MS / 1000}`;
-    return result(200, { ok: true }, { "Set-Cookie": cookie });
+    return result(200, { ok: true }, { "Set-Cookie": sessionCookie() });
   }
 
   if (action === "logout" && event.httpMethod === "POST") {
     return result(200, { ok: true }, { "Set-Cookie": `${COOKIE}=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0` });
   }
   if (!validSession(headers.cookie)) return result(401, { error: "authentication_required" });
+  if (action === "keepalive" && event.httpMethod === "POST") return result(200, { ok: true }, { "Set-Cookie": sessionCookie() });
 
   if (action === "list" && event.httpMethod === "GET") {
     try {
@@ -389,4 +389,4 @@ exports.handler = async (event) => {
   }
 };
 
-exports.__test = { validateContent, validSession, loginLimit, constantTimeEqual, importMissingBuiltIns, storageErrorDiagnostic };
+exports.__test = { validateContent, validSession, sessionCookie, SESSION_MS, loginLimit, constantTimeEqual, importMissingBuiltIns, storageErrorDiagnostic };
