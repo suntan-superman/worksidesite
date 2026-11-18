@@ -3,14 +3,18 @@ import fs from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const sitemapTest = require("../netlify/functions/portfolio-sitemap").__test;
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataSource = fs.readFileSync(path.join(root, "src/components/portfolioData.js"), "utf8");
 const projects = new Function(dataSource.replace("export const projects =", "return"))();
 const existingSlugs = ["sageset", "merxus-ai", "radiusiq", "property-intelligence", "galageaux-arcade", "workside-signals", "cutpro-tree-service", "sellmykernhome", "workside-logistics"];
 
-test("keeps all nine existing portfolio projects and adds Route Logistics", () => {
-  assert.equal(projects.length, 10);
+test("keeps all ten existing portfolio projects and adds Route Logistics", () => {
+  assert.equal(projects.length, 11);
   assert.deepEqual(existingSlugs.filter((slug) => !projects.some((project) => project.slug === slug)), []);
   assert.ok(projects.some((project) => project.slug === "route-logistics"));
 });
@@ -43,9 +47,10 @@ test("only reviewed public product imagery is referenced and every image has alt
   assert.equal(projects.find((project) => project.slug === "workside-logistics").imageUrl, undefined);
 });
 
-test("all project URLs, including Route Logistics, are present in the sitemap", () => {
-  const sitemap = fs.readFileSync(path.join(root, "public/sitemap.xml"), "utf8");
-  for (const project of projects) assert.ok(sitemap.includes(`/work/${project.slug}</loc>`), `${project.slug}: sitemap URL`);
+test("production sitemap defaults include every built-in portfolio project", () => {
+  const sitemapSlugs = [...sitemapTest.indexableSlugs([])].sort();
+  const projectSlugs = projects.map((project) => project.slug).sort();
+  assert.deepEqual(sitemapSlugs, projectSlugs);
 });
 
 test("public case studies do not name the retired brand or expose internal dashboard hosts", () => {
@@ -54,3 +59,5 @@ test("public case studies do not name the retired brand or expose internal dashb
   assert.equal(data.includes("worksidelogistics.netlify.app"), false);
   assert.equal(data.includes("worksidehost.com"), false);
 });
+
+

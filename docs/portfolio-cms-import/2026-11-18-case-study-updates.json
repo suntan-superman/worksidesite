@@ -1,0 +1,91 @@
+{
+  "kind": "workside-portfolio-case-study-updates",
+  "instructions": "Content patches for the existing Workside portfolio CMS records. Apply only the fields in each update while authenticated at /admin/content; preserve all other saved record fields and each existing /work/{slug} URL.",
+  "updates": [
+    {
+      "slug": "merxus-ai",
+      "businessProblem": "Small teams can miss inbound customer calls while staff are busy or unavailable. When callers cannot leave a clear request, contact details, or preferred next step, the team has less information to use when following up.",
+      "solution": "Merxus AI answers inbound calls, captures caller intent and contact details, and supports appointment requests and configured follow-up workflows. Teams can use it to handle first-line call intake while keeping people responsible for reviewing and acting on requests.",
+      "keyFeatures": [
+        "Answers inbound calls and captures the caller’s request and contact details.",
+        "Supports appointment requests and routes captured information into business workflows.",
+        "Can send configured service notifications, including voice or SMS follow-up where applicable and consented.",
+        "Provides business use-case information and messaging disclosures on the public product site."
+      ],
+      "technicalCapabilities": [
+        "AI-assisted voice workflows for inbound call handling and structured request capture.",
+        "Voice and SMS communication paths for configured service follow-up.",
+        "Consent-aware messaging behavior and customer communication controls."
+      ],
+      "developmentChallenges": [
+        "Capture useful caller intent and contact information during a natural phone conversation.",
+        "Connect call handling to practical appointment and follow-up workflows.",
+        "Represent communication and consent limits clearly in product behavior and public disclosures."
+      ],
+      "outcomes": [
+        "A live product for inbound call answering and customer request capture.",
+        "A public website that explains supported workflows, use cases, and messaging disclosures."
+      ],
+      "seoTitle": "Merxus AI Receptionist Case Study | Workside Software",
+      "metaDescription": "How Workside developed Merxus AI for inbound call answering, customer request capture, appointment requests, and configured follow-up workflows.",
+      "imageNote": "Keep the existing Merxus product artwork. The available Merxus dashboard screenshots depict an older real-estate product and are not representative of the current AI receptionist product."
+    },
+    {
+      "slug": "sageset",
+      "businessProblem": "People need workout plans they can adapt to their goals and schedule, along with a simple way to follow daily sessions and review progress over time.",
+      "solution": "SageSet is an iPhone fitness app for creating or generating editable workout plans, following daily sessions, and recording progress. Its published app also includes guided squat challenges with camera-based repetition tracking.",
+      "keyFeatures": [
+        "Personalized workout plans, including optional AI-assisted plan generation.",
+        "Daily exercise instructions with sets, repetitions, and completion tracking.",
+        "Calendar-based workout history and nutrition tools.",
+        "Guided squat challenges with camera-based repetition tracking in the published app."
+      ],
+      "technicalCapabilities": [
+        "iPhone app design and release for a consumer fitness product.",
+        "Editable training plans and daily workout tracking flows.",
+        "Camera-based movement tracking for the published squat challenge."
+      ],
+      "developmentChallenges": [
+        "Make generated plan suggestions editable so users can review and adjust them.",
+        "Connect planning, daily workout completion, and calendar progress in one app.",
+        "Present camera-based challenge guidance in a mobile workout experience."
+      ],
+      "outcomes": [
+        "A published iPhone fitness app with editable workout planning and progress tracking.",
+        "The App Store release includes AI-assisted plan generation and a guided squat challenge."
+      ],
+      "seoTitle": "SageSet Fitness App Case Study | Workside Software",
+      "metaDescription": "Workside built SageSet, a published iPhone fitness app for editable workout plans, progress tracking, nutrition tools, and guided squat challenges.",
+      "imageNote": "Keep /projects/sageset-challenges.webp as the genuine app screenshot. Its alt text should describe the visible challenge list."
+    },
+    {
+      "slug": "route-logistics",
+      "businessProblem": "Field-service teams need dispatch plans, customer and job records, and technician updates to stay connected. Separate workflows can make assignments and completed field work harder to review.",
+      "solution": "Route Logistics connects web-based company operations with assigned technician work in a companion mobile app. Managers can schedule and assign work; technicians can review job instructions and record supported visit details. The web release is live, while the mobile apps have not received a new store release.",
+      "keyFeatures": [
+        "Schedule jobs while checking staff eligibility, availability, and calendar conflicts.",
+        "Create recurring appointments and retain scheduling change history.",
+        "Provide technicians with read-only job instructions and tools for work records, photos, checklists, and visit evidence.",
+        "Allow eligible owners and managers to switch between management and their own assigned field work.",
+        "Queue supported field updates for retry when connectivity is interrupted."
+      ],
+      "technicalCapabilities": [
+        "React web operations interface and Expo-based iOS and Android application source.",
+        "Firebase Authentication, Firestore, and Storage with company-scoped access checks.",
+        "Role-aware workflows, server-checked assignments, and retry-safe field updates."
+      ],
+      "developmentChallenges": [
+        "Keep scheduling and field updates aligned across management and technician workflows.",
+        "Limit job instructions and actions according to company role and assignment.",
+        "Support retry of field updates through temporary connectivity interruptions."
+      ],
+      "outcomes": [
+        "A production web release for dispatch, scheduling, and field-work coordination, published November 15, 2026.",
+        "The corresponding iOS and Android source is implemented; no new native store build was published with the web release."
+      ],
+      "seoTitle": "Route Logistics Field Service Software Case Study | Workside Software",
+      "metaDescription": "A production field-service web release for dispatch, recurring schedules, technician work records, and role-aware operations, with mobile source awaiting its next store release.",
+      "imageNote": "No genuine Route Logistics product screenshot was available in the reviewed assets. Leave the image unset until an approved product screenshot is available."
+    }
+  ]
+}
