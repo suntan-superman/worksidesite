@@ -1,7 +1,7 @@
 const { getDb } = require("../shared/content-store");
 
 const ORIGIN = "https://worksidesoftware.com";
-const STATIC_ROUTES = ["/", "/services", "/work", "/about", "/contact", "/support", "/privacy", "/terms"];
+const STATIC_ROUTES = ["/", "/services", "/work", "/about", "/contact", "/support", "/privacy", "/terms", "/articles/how-much-does-custom-software-development-cost-for-a-small-business"];
 const BUILT_IN_SLUGS = ["anyryde", "route-logistics", "sageset", "merxus-ai", "radiusiq", "property-intelligence", "workside-signals", "galageaux-arcade", "workside-logistics", "cutpro-tree-service", "sellmykernhome"];
 const xmlEscape = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -29,4 +29,4 @@ exports.handler = async (event) => {
   }
 };
 
-exports.__test = { indexableSlugs };
+exports.__test = { indexableSlugs, staticRoutes: STATIC_ROUTES };

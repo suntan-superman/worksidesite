@@ -49,6 +49,11 @@ const bodies = {
   "/about": ["Thoughtful software.", `<h1>About Workside Software</h1><p>We are a software development company building custom applications and products for businesses with problems worth solving.</p><h2>Practical engineering, from idea to production</h2><p>Our work spans web applications, mobile apps, AI-powered communications, analytics, and specialized business software. Some projects are our own products; others are developed with clients.</p><p>We take on the product details as well as the engineering: understanding the problem, shaping a useful experience, connecting the right systems, and preparing software for production.</p><p><a href="/work">Explore our work</a></p>`],
   "/contact": ["Tell us what", `<h1>Discuss your project</h1><p>Share a little about the challenge, the idea, or the process you would like to improve. Project types: custom web application, iOS or Android app, AI or business automation, business intelligence and analytics, SaaS product, SEO and digital growth.</p><p>Email: <a href="mailto:contact@worksidesoftware.com">contact@worksidesoftware.com</a></p>`],
 };
+const costArticleRoute = "/articles/how-much-does-custom-software-development-cost-for-a-small-business";
+const costArticleSource = read("public/articles/how-much-does-custom-software-development-cost-for-a-small-business/index.html");
+const costArticleBody = costArticleSource.match(/<main>([\s\S]*?)<\/main>/i)?.[1];
+if (!costArticleBody) throw new Error("Custom software cost article is missing its static body");
+bodies[costArticleRoute] = [null, `<article class="article-body">${costArticleBody}</article>`];
 projects.forEach((p) => {
   const visual = p.imageUrl ? `<figure><img src="${esc(p.imageUrl)}" alt="${esc(p.imageAlt || `${p.name} project image`)}" loading="lazy">${p.imageCaption ? `<figcaption>${esc(p.imageCaption)}</figcaption>` : ""}</figure>` : "";
   const publicLink = p.link ? `<p><a href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">${esc(p.linkLabel || "Visit project")}</a></p>` : "";
@@ -67,7 +72,14 @@ Object.entries(components).forEach(([route, file]) => {
 
 const organization = { "@context": "https://schema.org", "@type": "Organization", "@id": `${origin}/#organization`, name: "Workside Software LLC", url: origin, email: "contact@worksidesoftware.com", address: { "@type": "PostalAddress", addressLocality: "Bakersfield", addressRegion: "CA", addressCountry: "US" } };
 const serviceSchemas = services.map(([name]) => ({ "@context": "https://schema.org", "@type": "Service", name, provider: { "@id": `${origin}/#organization` }, areaServed: "United States" }));
-const schemaFor = (route) => JSON.stringify([organization, ...(route === "/services" ? serviceSchemas : [])]).replace(/</g, "\\u003c");
+const costArticleSchema = {
+  "@context": "https://schema.org", "@type": "Article",
+  headline: "How Much Does Custom Software Development Cost for a Small Business?",
+  description: "Learn what shapes custom software costs for small businesses, from websites and applications to integrations, mobile apps, maintenance, and build-versus-buy decisions.",
+  mainEntityOfPage: `${origin}${costArticleRoute}`, datePublished: "2026-11-20", dateModified: "2026-11-20",
+  author: { "@id": `${origin}/#organization` }, publisher: { "@id": `${origin}/#organization` },
+};
+const schemaFor = (route) => JSON.stringify([organization, ...(route === "/services" ? serviceSchemas : []), ...(route === costArticleRoute ? [costArticleSchema] : [])]).replace(/</g, "\\u003c");
 
 const template = fs.readFileSync(path.join(buildDir, "index.html"), "utf8");
 const staticRoutes = Object.keys(bodies);

@@ -19,6 +19,7 @@ import { Portfolio, ProjectDetail } from "./components/Portfolio";
 import Seo from "./components/Seo";
 import AdminContent from "./components/AdminContent";
 import ScrollManager from "./components/ScrollManager";
+import ArticleCustomSoftwareCost from "./components/ArticleCustomSoftwareCost";
 
 
 
@@ -49,6 +50,7 @@ function App() {
           <Route path="/registration" element={<RegistrationForm />} />
           <Route path="/support" element={<Support />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/articles/how-much-does-custom-software-development-cost-for-a-small-business" element={<ArticleCustomSoftwareCost />} />
           <Route path="/terms" element={<Terms />} />
         </Routes>
       </main>

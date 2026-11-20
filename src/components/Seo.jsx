@@ -13,6 +13,7 @@ const pages = {
   "/privacy": ["Privacy Policy | Workside Software", "Read the Workside Software website and product privacy policy."],
   "/terms": ["Terms of Use | Workside Software", "Review the terms of use for Workside Software and its services."],
   "/support": ["Product Support | Workside Software", "Get help with Workside Software products and services."],
+  "/articles/how-much-does-custom-software-development-cost-for-a-small-business": ["How Much Does Custom Software Development Cost for a Small Business? | Workside Software", "Realistic cost drivers, project examples, and build-versus-buy guidance for small businesses evaluating custom software development."],
 };
 
 export default function Seo() {

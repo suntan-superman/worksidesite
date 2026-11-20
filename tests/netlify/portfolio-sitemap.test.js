@@ -2,6 +2,10 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const { __test } = require("../../netlify/functions/portfolio-sitemap");
 
+test("sitemap includes the published software cost guide", () => {
+  assert.ok(__test.staticRoutes.includes("/articles/how-much-does-custom-software-development-cost-for-a-small-business"));
+});
+
 test("sitemap keeps public defaults, excludes unpublished and non-indexable overrides, and adds published projects", () => {
   const docs = [
     { data: () => ({ slug: "sageset", status: "draft" }) },
